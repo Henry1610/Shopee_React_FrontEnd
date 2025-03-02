@@ -19,7 +19,7 @@ function CategoryList() {
                 categories.map((category, index) => {
                     return (
                         <a href={category.url}>
-                            <div key={index} className="border-2 rounded-lg p-1 hover:bg-[#ee4d2d] cursor-pointer">
+                            <div key={index} className="border-2 border-[#ee4d2d] rounded-lg p-1 hover:bg-[#ee4d2d] cursor-pointer">
                                 {category.name}
                             </div>
                         </a>)

@@ -14,7 +14,10 @@ function Navbar() {
                         <a href="#" className="hover:underline">Trở thành người bán Shopee</a>
                         <a href="#" className="hover:underline">Tải ứng dụng</a>
                         <a href="#" className="hover:underline">Kết nối</a>
+                        
+
                     </div>
+                    
                     <div className="flex space-x-4 ">
                         <a href="#" className="hover:underline ">Thông báo</a>
                         <a href="#" className="hover:underline">Hỗ trợ</a>
@@ -31,7 +34,7 @@ function Navbar() {
                 <div className="flex justify-between items-center h-[85px] w-full p-4">
                     {/* Logo */}
                     <div>
-                        <Link to="/"><img src={images.logo} alt="Logo" className="w-[162px] h-[50px]" /></Link>
+                        <Link to="/"><img src={images.logoWhite} alt="Logo" className="w-[162px] h-[50px]" /></Link>
                     </div>
 
                     {/* Search Bar */}
