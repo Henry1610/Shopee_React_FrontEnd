@@ -4,6 +4,7 @@ import Wrapper from "../../components/Wrapper";
 import CategoryList from "../../components/CategoryList/CategoryList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
+import Footer from "../../components/Footer/Footer";
 
 const imagesBanner = [
     "https://cf.shopee.vn/file/vn-11134258-7ras8-m5184szf0klz56_xxhdpi",
@@ -125,7 +126,8 @@ function Home() {
                 </div>
                 <div className="mt-4 bg-white border-b-2 border-[#EE4D2D] text-center p-4">
                     <span className="text-[#EE4D2D] text-xl font-bold ">GỢI Ý HÔM NAY</span>
-                </div>   
+                </div>
+                <Footer/>   
             </Wrapper>
         </div>
     );

@@ -48,7 +48,7 @@ export default function Banner({ images }) {
             <div className="grid grid-cols-10 p-7 max-w-[1256px] gap-1">
 
                 {/* Phần Swiper (chiếm 6 cột) */}
-                <div className="col-span-6 flex items-center justify-center">
+                <div className="col-span-7 flex items-center justify-center">
                     <Swiper
                         modules={[Navigation, Pagination, Autoplay]}
                         spaceBetween={20}
@@ -74,7 +74,7 @@ export default function Banner({ images }) {
                 </div>
 
                 {/* Phần ảnh bên phải (chiếm 4 cột) */}
-                <div className="col-span-4 flex flex-col gap-1">
+                <div className="col-span-3 flex flex-col gap-1">
                     <img
                         className="w-full h-1/2 object-fill rounded-lg"
                         src="https://cf.shopee.vn/file/sg-11134258-7rd3t-m6q96emwd9hw36_xhdpi"
