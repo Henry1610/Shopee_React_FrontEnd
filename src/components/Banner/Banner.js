@@ -45,7 +45,7 @@ export default function Banner({ images }) {
     ]
     return (
         <div className="flex justify-center bg-white">
-            <div className="grid grid-cols-10 p-7 max-w-[1256px] gap-1">
+            <div className="grid grid-cols-10 py-7 px-40 max-w-[1200px] gap-1">
 
                 {/* Phần Swiper (chiếm 6 cột) */}
                 <div className="col-span-7 flex items-center justify-center">
@@ -66,7 +66,7 @@ export default function Banner({ images }) {
                                 <img
                                     src={img}
                                     alt={`Slide ${index}`}
-                                    className="w-full h-[300px] object-fill rounded-lg"
+                                    className="w-full h-[200px] object-fill rounded-sm"
                                 />
                             </SwiperSlide>
                         ))}
@@ -76,12 +76,12 @@ export default function Banner({ images }) {
                 {/* Phần ảnh bên phải (chiếm 4 cột) */}
                 <div className="col-span-3 flex flex-col gap-1">
                     <img
-                        className="w-full h-1/2 object-fill rounded-lg"
+                        className="w-full h-1/2 object-fill rounded-sm"
                         src="https://cf.shopee.vn/file/sg-11134258-7rd3t-m6q96emwd9hw36_xhdpi"
                         alt="Banner 1"
                     />
                     <img
-                        className="w-full h-1/2 object-fill rounded-lg"
+                        className="w-full h-1/2 object-fill rounded-sm"
                         src="https://cf.shopee.vn/file/sg-11134258-7rd6p-m6q9co7g9ti399_xhdpi"
                         alt="Banner 2"
                     />
