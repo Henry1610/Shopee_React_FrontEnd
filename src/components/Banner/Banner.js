@@ -45,7 +45,7 @@ export default function Banner({ images }) {
     ]
     return (
         <div className="flex justify-center bg-white">
-            <div className="grid grid-cols-10 p-7 max-w-[1256px] gap-1">
+            <div className="grid grid-cols-10 py-7 max-w-[1200px] gap-1 mx-auto">
 
                 {/* Phần Swiper (chiếm 6 cột) */}
                 <div className="col-span-7 flex items-center justify-center">
@@ -66,7 +66,7 @@ export default function Banner({ images }) {
                                 <img
                                     src={img}
                                     alt={`Slide ${index}`}
-                                    className="w-full h-[300px] object-fill rounded-lg"
+                                    className="w-full h-[230px] object-fill rounded-sm"
                                 />
                             </SwiperSlide>
                         ))}
@@ -76,24 +76,24 @@ export default function Banner({ images }) {
                 {/* Phần ảnh bên phải (chiếm 4 cột) */}
                 <div className="col-span-3 flex flex-col gap-1">
                     <img
-                        className="w-full h-1/2 object-fill rounded-lg"
+                        className="w-full h-1/2 object-fill rounded-sm"
                         src="https://cf.shopee.vn/file/sg-11134258-7rd3t-m6q96emwd9hw36_xhdpi"
                         alt="Banner 1"
                     />
                     <img
-                        className="w-full h-1/2 object-fill rounded-lg"
+                        className="w-full h-1/2 object-fill rounded-sm"
                         src="https://cf.shopee.vn/file/sg-11134258-7rd6p-m6q9co7g9ti399_xhdpi"
                         alt="Banner 2"
                     />
                 </div>
-                <div className="col-span-10 grid grid-cols-4 gap-4 mt-4 ">
+                <div className="col-span-10 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4 mt-4">
                 {                   
                     voucher.map((item, index) => {
-                        return (<div key={index} className="flex flex-col items-center bg-white shadow-md p-3 rounded-lg hover:shadow-lg transition-all duration-300 cursor-pointer">
+                        return (<div key={index} className="flex flex-col  items-center bg-white shadow-md  rounded-lg hover:shadow-lg transition-all duration-300 cursor-pointer">
                             <div>
-                                <img className="w-20 h-20 object-contain" src={item.image}  alt="ảnh lỗi" />
+                                <img className="w-10 h-10 object-contain" src={item.image}  alt="ảnh lỗi" />
                             </div>
-                            <div className="text-sm font-medium mt-2 text-center"> {item.title}</div>
+                            <div className="text-xs font-thin    mt-2 text-center"> {item.title}</div>
                         </div>)
                     })
                 }

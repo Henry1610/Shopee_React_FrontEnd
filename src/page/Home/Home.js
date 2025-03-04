@@ -22,8 +22,9 @@ function Home() {
     return (
         <div className="h-[2000px]">
             <Navbar />
+            <Banner images={imagesBanner} />
+
             <Wrapper>
-                <Banner images={imagesBanner} />
                 <CategoryList />
 
                 {/* Shopee Mall Section */}
@@ -68,55 +69,55 @@ function Home() {
                     </div>
                     <div className="grid grid-cols-6 bg-white border-t-2 border-gray p-3">
                         <div className="col-span-2 ">
-                            <img className=" w-full h-full" src="https://cf.shopee.vn/file/vn-11134258-7ras8-m4iespqewa2vee" />
+                            <img className="" src="https://cf.shopee.vn/file/vn-11134258-7ras8-m4iespqewa2vee" />
 
                         </div>
                         <div className="grid grid-cols-4 col-span-4 gap-4  content-center ml-3">
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/5fb3f7b359a582f322ea39313e10260b@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/5fb3f7b359a582f322ea39313e10260b@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                     Mua 1 tặng 1
                                 </div>
                             </div>
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/vn-50009109-7e80ab64bdc989f5c0862ed828f343a2@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/vn-50009109-7e80ab64bdc989f5c0862ed828f343a2@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                 Ưu đãi đến 50%
                                 </div>
                             </div>
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/vn-11134258-7r98o-lx6pdo1qwogrf1@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/vn-11134258-7r98o-lx6pdo1qwogrf1@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                 Mua 1 được 2
                                 </div>
                             </div>
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/vn-50009109-7ce7d5800afb2b6c80a7242236ec7409@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/vn-50009109-7ce7d5800afb2b6c80a7242236ec7409@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                 Mua là có quà
                                 </div>
                             </div>
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/vn-11134258-7ra0g-m6glb2udrprs42@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/vn-11134258-7ra0g-m6glb2udrprs42@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                     Mua 1 tặng 1
                                 </div>
                             </div>
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/be40023a9d9cff397a470460bc7a924d@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/be40023a9d9cff397a470460bc7a924d@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                 Deli siêu sale  
                                 </div>
                             </div>
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/vn-11134258-7ras8-m4ycyi0ypc5414@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/vn-11134258-7ras8-m4ycyi0ypc5414@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                     Mua 1 tặng 1
                                 </div>
                             </div>
                             <div className="items-center flex flex-col items-center">
-                                <img className="w-full h-[250px] object-cover " src="https://down-vn.img.susercontent.com/file/vn-50009109-08a87dd1e828b4bef31dafa67d5300ec@resize_w402_nl.webp" />
-                                <div className="text-center text-xl  text-[#EE4D2D] font-bold mt-[-35px]">
+                                <img className=" object-cover " src="https://down-vn.img.susercontent.com/file/vn-50009109-08a87dd1e828b4bef31dafa67d5300ec@resize_w402_nl.webp" />
+                                <div className="text-center text-base  text-[#EE4D2D] font-bold mt-[-35px]">
                                 Quà mọi đơn
                                 </div>
                             </div>
@@ -127,6 +128,7 @@ function Home() {
                 <div className="mt-4 bg-white border-b-2 border-[#EE4D2D] text-center p-4">
                     <span className="text-[#EE4D2D] text-xl font-bold ">GỢI Ý HÔM NAY</span>
                 </div>
+                
                 <Footer/>   
             </Wrapper>
         </div>
