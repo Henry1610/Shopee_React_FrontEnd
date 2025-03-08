@@ -70,11 +70,6 @@ export default function Banner({ images }) {
                                 <img
                                     src={img}
                                     alt={`Slide ${index}`}
-<<<<<<< HEAD
-                                    className="w-full h-[200px] object-fill rounded-sm"
-=======
-                                    className="w-full h-[230px] object-fill rounded-sm"
->>>>>>> dbeeac5ef44745faf5f5a5e9fdcf430287119480
                                 />
                             </SwiperSlide>
                         ))}
