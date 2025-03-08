@@ -116,7 +116,7 @@ function Footer(){
             </div>
 
         </div>
-        <div className="flex justify-between w-full p-10 text-sm text-gray-500">
+        <div className="flex justify-between w-full p-10 text-xs text-gray-500">
         <div>© 2025 Shopee. Tất cả các quyền được bảo lưu.</div>
 
         {/* Render tất cả trong cùng một flex container */}

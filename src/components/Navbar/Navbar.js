@@ -6,9 +6,9 @@ import './Navbar.css';
 function Navbar() {
     return (
         <div className=" bg-gradient-to-t from-[#ee4d2d] to-[#d0011b]  text-white ">
-            <div className="max-w-[1200px] w-full mx-auto px-4">
+            <div className="max-w-[1200px] w-full mx-auto px-[1rem]">
                 {/* Top Banner */}
-                <div className="flex justify-between items-center text-[0.9rem] font-normal p-1">
+                <div className="flex justify-between items-center text-xs font-normal p-1">
                     <div className="flex space-x-1 link-item">
                         <Link to="/seller" className="hover:underline">Kênh người bán</Link>
                         <a href="#" className="hover:underline">Trở thành người bán Shopee</a>
@@ -18,7 +18,7 @@ function Navbar() {
 
                     </div>
                     
-                    <div className="flex space-x-4 ">
+                    <div className="flex space-x-4 text-xs">
                         <a href="#" className="hover:underline ">Thông báo</a>
                         <a href="#" className="hover:underline">Hỗ trợ</a>
                         <a href="#" className="hover:underline">Tiếng Việt</a>
@@ -38,7 +38,7 @@ function Navbar() {
                     </div>
 
                     {/* Search Bar */}
-                    <div >
+                    <div  >
                         <div className="flex-1  relative ">
                             <input
                                 type="text"
