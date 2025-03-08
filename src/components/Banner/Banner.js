@@ -6,8 +6,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import { useContext } from "react";
-import { CartContext } from "../../context/CartContext";
+
 
 export default function Banner({ images }) {
 
@@ -47,9 +46,8 @@ export default function Banner({ images }) {
 
     ]
     return (
-        <div className="flex justify-center bg-white">
+        <div className="flex justify-center bg-white ">
             <div className="grid grid-cols-10 py-7 max-w-[1200px] gap-1 mx-auto">
->>>>>>> dbeeac5ef44745faf5f5a5e9fdcf430287119480
 
                 {/* Phần Swiper (chiếm 6 cột) */}
                 <div className="col-span-7 flex items-center justify-center">
@@ -70,6 +68,7 @@ export default function Banner({ images }) {
                                 <img
                                     src={img}
                                     alt={`Slide ${index}`}
+                                    className="w-full h-[230px] object-fill rounded-sm"
                                 />
                             </SwiperSlide>
                         ))}

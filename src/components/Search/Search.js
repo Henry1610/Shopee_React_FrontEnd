@@ -1,16 +1,27 @@
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react/headless'; // different import path!
-import { useState } from 'react';
-
+import { useEffect, useState } from 'react';
+import useFetch from '../../useFetch/useFetch';
 function Search() {
-    const [result, setResult] = useState('')
+    const [resultInput, setResultInput] = useState('')
+    const [products, setProductsList] = useState([])
     const [loading, setLoading] = useState(false)
     const [hide, setHide] = useState(true)
+    
+ 
+    
+    fetch(`https://dummyjson.com/products/search?q=${encodeURIComponent(resultInput)}&limit=7`)
+        .then((res) => res.json())
+        .then((data) => setProductsList(data.products))
+        .catch((error) =>
+            console.error("Lỗi khi fetch categories:", error)
+        );
+
     const handleChange = (e) => {
         const searchValue = e.target.value
         if (!searchValue.startsWith(' ')) {
-            setResult(searchValue)
+            setResultInput(searchValue)
 
         }
     }
@@ -22,7 +33,7 @@ function Search() {
             <Tippy
                 onClickOutside={handleHide}
                 interactive
-                visible={hide && result.length > 0}
+                visible={hide && resultInput.length > 0}
                 render={(attrs => (<div tabIndex="-1" {...attrs}>
                     <table className="bg-white shadow-lg rounded-md w- border w-full  lg:w-[800px] text-black" >
                         <thead >
@@ -30,7 +41,13 @@ function Search() {
                                 <th className="px-3 py-1 text-left ">Sản phẩm</th>
                             </tr>
                         </thead>
-
+                        <tbody>
+                            {products.map((product) => (
+                                <tr key={product.id} className="border-b">
+                                    <td className="px-3 py-1">{product.title}</td>
+                                </tr>
+                            ))}
+                        </tbody>
                     </table>
                 </div>))}>
                 <div className="flex-1  relative ">

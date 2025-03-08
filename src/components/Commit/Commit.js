@@ -1,6 +1,6 @@
 function Commit() {
     return (
-    <div className="py-4 border-b-2 border-[#ee4d2d] text-[12px]">
+    <div className="py-4 border-b-2 border-[#ee4d2d] text-[10px] border-t-2 px-10">
         <h1 className="font-medium">SHOPEE - GÌ CŨNG CÓ, MUA HẾT Ở SHOPEE</h1>
         <p>Shopee - ứng dụng mua sắm trực tuyến thú vị, tin cậy, an toàn và miễn phí! Shopee là nền tảng giao dịch trực tuyến hàng đầu ở Đông Nam Á, có trụ sở chính ở Singapore, đã có mặt ở khắp các khu vực Singapore, Malaysia, Indonesia, Thái Lan, Philippines, Đài Loan, Brazil, México, Colombia, & Chile. Với sự đảm bảo của Shopee, bạn sẽ mua hàng trực tuyến an tâm và nhanh chóng hơn bao giờ hết!</p>
         <br />

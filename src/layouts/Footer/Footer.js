@@ -10,7 +10,7 @@ function Footer(){
         "CHÍNH SÁCH VẬN CHUYỂN",
         "CHÍNH SÁCH TRẢ HÀNG VÀ HOÀN TIỀN"
     ];
-    return (<div className="max-w-[1200px] mx-auto flex flex-col items-center text-center text-xs">
+    return (<div className="max-w-[1200px] mx-auto flex flex-col items-center text-center text-xs px-10">
         <div className="grid grid-cols-5 w-full border-b-2 border-gray">
             <div className="col-span-1 flex flex-col text-start ">
                 <div className="font-bold mt-[2.5rem] mb-[1.25rem]">DỊCH VỤ KHÁCH HÀNG</div>
