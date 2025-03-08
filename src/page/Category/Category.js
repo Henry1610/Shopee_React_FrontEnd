@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import ProductList from "../../components/CategoryList/ProductList";
 import Wrapper from "../../components/Wrapper";
 import Footer from "../../layouts/Footer/Footer";
@@ -9,7 +10,9 @@ const discounts = ["10%", "20%", "50%"];
 const ratings = [4, 5];
 const availability = ["Còn hàng", "Sắp hết hàng", "Hết hàng"];
 const sortOptions = ["Giá tăng dần", "Giá giảm dần", "Bán chạy nhất", "Đánh giá cao nhất"];
+
 function Category() {
+    const {category}=useParams()
     return (
         <div>
             <Navbar />
@@ -89,7 +92,7 @@ function Category() {
                         </div>
                     </div>
                     <div className="col-span-4 ">
-                        <ProductList />
+                        <ProductList category={category}/>
                     </div>
                 </div>
                 <Footer/>

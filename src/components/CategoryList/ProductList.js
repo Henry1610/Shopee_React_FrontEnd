@@ -4,9 +4,13 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 
-function ProductList() {
+function ProductList({category}) {
+    
+    const endpoint=category? `https://dummyjson.com/products/category/${category}`
+    : `https://dummyjson.com/products`;
+
     const { addToCart } = useContext(CartContext);
-    const { data, loading, error } = useFetch("https://dummyjson.com/products");
+    const { data, loading, error } = useFetch(endpoint);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;

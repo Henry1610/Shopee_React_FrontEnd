@@ -2,21 +2,39 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react/headless'; // different import path!
 import { useEffect, useState } from 'react';
+import { Link } from "react-router-dom";
+
 import useFetch from '../../useFetch/useFetch';
 function Search() {
     const [resultInput, setResultInput] = useState('')
     const [products, setProductsList] = useState([])
+    const [categories, setCategories] = useState([]); // ✅ State để lưu danh mục
+
     const [loading, setLoading] = useState(false)
+
+
     const [hide, setHide] = useState(true)
-    
- 
-    
-    fetch(`https://dummyjson.com/products/search?q=${encodeURIComponent(resultInput)}&limit=7`)
-        .then((res) => res.json())
-        .then((data) => setProductsList(data.products))
-        .catch((error) =>
-            console.error("Lỗi khi fetch categories:", error)
-        );
+
+
+
+    useEffect(() => {
+
+
+        setLoading(true);
+        fetch(`https://dummyjson.com/products/search?q=${encodeURIComponent(resultInput)}&limit=7`)
+            .then((res) => res.json())
+            .then((data) => setProductsList(data.products)) // ✅ Tránh lỗi nếu API trả về null
+            .catch((error) => console.error('Lỗi khi fetch sản phẩm:', error))
+            .finally(() => setLoading(false));
+
+    }, [resultInput]); // ✅ Chỉ fetch API khi `resultInput` thay đổi
+
+    useEffect(() => {
+        fetch('https://dummyjson.com/products/category-list')
+            .then((res) => res.json())
+            .then((data) => setCategories(data))
+            .catch((error) => console.error('Lỗi khi fetch danh mục:', error));
+    }, []);
 
     const handleChange = (e) => {
         const searchValue = e.target.value
@@ -35,17 +53,19 @@ function Search() {
                 interactive
                 visible={hide && resultInput.length > 0}
                 render={(attrs => (<div tabIndex="-1" {...attrs}>
-                    <table className="bg-white shadow-lg rounded-md w- border w-full  lg:w-[800px] text-black" >
+                    <table className="bg-white shadow-lg rounded-md w- border w-full  lg:w-[800px] text-black " >
                         <thead >
                             <tr className="bg-gray-100">
                                 <th className="px-3 py-1 text-left ">Sản phẩm</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {products.map((product) => (
-                                <tr key={product.id} className="border-b">
+                        <tbody className='flex flex-col'>
+                            {products.length === 0 ? <div className='text-center text-lg p-3 rounded-md'>Không tìm thấy sản phẩm!</div> : products.map((product) => (
+                                <Link to={`/products/${product.id}`} className="border-b" key={product.id}>
+
                                     <td className="px-3 py-1">{product.title}</td>
-                                </tr>
+
+                                </Link>
                             ))}
                         </tbody>
                     </table>
@@ -68,10 +88,12 @@ function Search() {
 
 
             <div className="w-full flex flex-wrap gap-2 text-xs text-white mt-2 ">
-                {["Máy iphone 6", "Máy iphone 7", "Laptop Gaming", "Tai nghe Bluetooth", "Bàn phím cơ"].map((item, index) => (
-                    <a key={index} href="#" className="hover:underline ">
-                        {item}
-                    </a>
+                {categories.map((category, index) => (
+                    index < 11 && ( // ✅ Chỉ render nếu index < 5
+                        <Link key={index} to={`/products/category/${category}`} className="hover:underline "     >
+                            {category}
+                        </Link>
+                    )
                 ))}
             </div>
 
