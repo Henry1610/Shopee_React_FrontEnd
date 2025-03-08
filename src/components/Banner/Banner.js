@@ -1,13 +1,16 @@
 import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Import module Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import './Swiper.css'
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 
 export default function Banner({ images }) {
+
     const voucher = [
         {
             image: "https://cf.shopee.vn/file/vn-50009109-5bf65d4dc0eb8f6b42074751e8b736a7_xhdpi",
@@ -44,7 +47,7 @@ export default function Banner({ images }) {
 
     ]
     return (
-        <div className="flex justify-center bg-white">
+        <div className="flex justify-center bg-white ">
             <div className="grid grid-cols-10 py-7 max-w-[1200px] gap-1 mx-auto">
 
                 {/* Phần Swiper (chiếm 6 cột) */}
