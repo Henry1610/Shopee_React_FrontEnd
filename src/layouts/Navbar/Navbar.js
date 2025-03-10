@@ -1,14 +1,26 @@
 import { Link } from "react-router-dom";
 import images from "../../assets/images";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMagnifyingGlass, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import {  faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { useEffect,useState } from "react";
 import './Navbar.css';
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import Search from "../../components/Search/Search";
 function Navbar() {
     const { cart } = useContext(CartContext)
+    const [currentUser, setCurrentUser] = useState(null);
 
+    useEffect(() => {
+        const user = localStorage.getItem("currentUser");
+        setCurrentUser(user);
+    }, []);
+
+    const handleLogout = () => {
+        localStorage.removeItem("currentUser");
+        setCurrentUser(null);
+        window.location.reload(); // Reload trang để cập nhật giao diện
+    };
     return (
         <div className=" bg-gradient-to-t from-[#ee4d2d] to-[#d0011b]  text-white ">
             <div className="max-w-[1200px] w-full mx-auto px-[1rem]">
@@ -28,9 +40,18 @@ function Navbar() {
                         <a href="#" className="hover:underline">Hỗ trợ</a>
                         <a href="#" className="hover:underline">Tiếng Việt</a>
                         <div className="flex space-x-2 pl-3">
-                            <Link to="/register" className="hover:underline ">Đăng Ký</Link>
-                            <span className="mx-2">|</span>
-                            <Link to="/login" className="hover:underline">Đăng Nhập</Link>
+                            {currentUser ? (
+                                <>
+                                    <span >Xin chào, {currentUser}</span>
+                                    <button onClick={handleLogout} className="hover:underline">Đăng xuất</button>
+                                </>
+                            ) : (
+                                <>
+                                    <Link to="/register" className="hover:underline">Đăng Ký</Link>
+                                    <span className="mx-2">|</span>
+                                    <Link to="/login" className="hover:underline">Đăng Nhập</Link>
+                                </>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -5,21 +5,50 @@ import { faFacebook, faFacebookMessenger, faTwitter, faPinterest } from "@fortaw
 import MostLike from "../../components/MostLike";
 import { useParams } from "react-router-dom";
 import useFetch from "../../useFetch";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
+import Swal from "sweetalert2";
 
 
 
 
 function ProductDetail() {
-    const {addToCart}=useContext(CartContext)
+    const [numberProduct, setNumberProduct] = useState(1)
 
+    const { addToCart } = useContext(CartContext)
     const { id } = useParams();
     const { data, loading, error } = useFetch(`https://dummyjson.com/products/${id}`)
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
     if (!data) return <p>No data available</p>; // Tránh lỗi khi data là null
     const originalPrice = (data.price / (1 - data.discountPercentage / 100)).toFixed(2);
+    const increase = (stock) => {
+        if (numberProduct === stock) {
+            Swal.fire({
+                title: "Cảnh báo!",
+                text: `Số lượng không thể vượt quá ${stock}!`,
+                icon: "warning",
+                confirmButtonText: "OK",
+            });
+        }
+
+        else {
+            setNumberProduct(prev => prev + 1);
+        }
+    };
+    const decrease = () => {
+        if (numberProduct === 1) {
+            Swal.fire({
+                title: "Lưu ý!",
+                text: "Số lượng tối thiểu là 1!",
+                icon: "info",
+                confirmButtonText: "OK",
+            });
+        }
+        else {
+            setNumberProduct(prev => prev - 1);
+        }
+    };
     return (<div className="max-w-[2000px]">
 
 
@@ -116,16 +145,16 @@ function ProductDetail() {
                         <div class="mt-4 flex items-center" >
                             <h3 class="font-semibold">Số lượng:</h3>
                             <div class="flex items-center m-2">
-                                <button class="border px-3 py-2 w-10 text-center">-</button>
-                                <input type="text" value="1" class="text-center border w-10 py-2" />
-                                <button class="border px-3 py-2 w-10 text-center">+</button>
+                                <button class="border px-3 py-2 w-10 text-center" onClick={() => decrease()}>-</button>
+                                <input type="text" value={numberProduct} class="text-center border w-10 py-2" />
+                                <button class="border px-3 py-2 w-10 text-center" onClick={() => increase(data.stock)}>+</button>
                             </div>
                             <div className="text-gray-500 text-sm">{data.stock} sản phẩm có sẵn ({data.availabilityStatus})</div>
                         </div>
 
 
                         <div class="mt-6 flex space-x-4">
-                            <button class="w-[170px] bg-orange-500 text-white py-2  hover:bg-orange-600" onClick={() => addToCart(data)}>Thêm Vào Giỏ Hàng</button>
+                            <button class="w-[170px] bg-orange-500 text-white py-2  hover:bg-orange-600" onClick={() => addToCart(data, 4)}>Thêm Vào Giỏ Hàng</button>
                             <button class="w-[170px] bg-red-500 text-white py-2  hover:bg-red-600">Mua Ngay</button>
                         </div>
                     </div>
@@ -218,30 +247,33 @@ function ProductDetail() {
                     <p><span className="font-semibold">Warranty:</span> {data.warrantyInformation}</p>
                 </div>
             </div>
-            <div class="mt-3 p-6   bg-white">
-                <div class="mt-3 p-6 bg-white">
-                    <div class="flex flex-wrap items-center justify-between bg-orange-50 p-6">
-                        <div class="flex items-center space-x-2 text-2xl flex-wrap">
-                            <p class="text-red-500 font-bold">{data.rating}</p>
-                            <p class="text-red-500 font-bold">/ 5</p>
-                            <div class="text-red-500">★★★★★</div>
+            <div className="mt-3 p-6 bg-white">
+                <div className="mt-3 p-6 bg-white">
+                    <div className="flex flex-wrap items-center justify-between bg-orange-50 p-6">
+                        {/* Phần đánh giá sao */}
+                        <div className="flex items-center space-x-2 text-2xl flex-wrap">
+                            <p className="text-red-500 font-bold">{data.rating}</p>
+                            <p className="text-red-500 font-bold">/ 5</p>
+                            <div className="text-red-500">★★★★★</div>
                         </div>
-                        <div class="flex flex-col  w-full md:w-auto gap-3">
-                            <div class="flex flex-wrap space-x-2 items-center overflow-x-auto gap-1">
-                                <button class="border px-4 py-2 text-sm rounded bg-red-500 text-white">Tất Cả</button>
-                                <button class="border px-4 py-2 text-sm rounded">5 Sao </button>
-                                <button class="border px-4 py-2 text-sm rounded">4 Sao (2)</button>
-                                <button class="border px-4 py-2 text-sm rounded">3 Sao (0)</button>
-                                <button class="border px-4 py-2 text-sm rounded">2 Sao (0)</button>
-                                <button class="border px-4 py-2 text-sm rounded">1 Sao (0)</button>
+
+                        {/* Phần bộ lọc đánh giá */}
+                        <div className="flex flex-col w-full md:w-auto gap-3 font-medium rounded-md ">
+                            <div className="flex flex-wrap space-x-2 items-center  gap-1 ">
+                                <button className="border px-4 py-2 text-sm rounded  bg-white hover:bg-[#ee4d2d] hover:text-white   ">Tất Cả</button>
+                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">5 Sao</button>
+                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">4 Sao (2)</button>
+                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">3 Sao (0)</button>
+                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">2 Sao (0)</button>
+                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">1 Sao (0)</button>
                             </div>
-                            <div class="flex flex-wrap justify-start space-x-2 overflow-x-auto gap-1">
-                                <button class="border px-4 py-2 text-sm rounded">Có Bình Luận (865)</button>
-                                <button class="border px-4 py-2 text-sm rounded">Có Hình Ảnh / Video (444)</button>
-                            </div>
+
+                            
                         </div>
                     </div>
                 </div>
+
+
 
 
 
@@ -266,8 +298,8 @@ function ProductDetail() {
                 </div>
 
             </div>
-        </Wrapper>
-    </div>);
+        </Wrapper >
+    </div >);
 }
 
 export default ProductDetail;

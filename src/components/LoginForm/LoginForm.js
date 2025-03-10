@@ -1,7 +1,29 @@
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext, useState } from "react";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
 
 function LoginForm({ switchToRegister }) {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate();
+    const handleLogin = (e) => {
+        e.preventDefault();
+
+        let users = JSON.parse(localStorage.getItem(`users`)) || [];
+        const user = users.find(u => u.email === email && u.password === password)
+
+        if (user) {
+            localStorage.setItem("currentUser", email);
+            alert("Đăng nhập thành công!");
+            navigate("/");
+        } else {
+            alert("Sai email hoặc mật khẩu!");
+        }
+    }
+
     return (<div className="absolute top-[30%] sm:top-1/2 right-0 transform -translate-y-1/2 bg-white p-5 sm:p-10 rounded-lg shadow-lg flex flex-col w-[90%] max-w-[400px] sm:right-0 sm:w-full">
 
 
@@ -11,18 +33,24 @@ function LoginForm({ switchToRegister }) {
         </div>
 
         <div>
-            <form>
+            <form onSubmit={handleLogin}>
                 <input
+                    value={email}
+                    type="email"
+                    onChange={(e) => setEmail(e.target.value)}
                     className="w-full py-2 px-4 mb-3 border rounded  text-start text-sm"
                     placeholder="Email/Số điện thoại/Tên đăng nhập"
                 />
-                <div>
-                    <input
-                        className="w-full py-2 px-4 mb-3 border rounded text-start text-sm"
-                        placeholder="Mật khẩu"
-                    />
 
-                </div>
+                <input
+                    value={password}
+                    type="password"
+                    onChange={(e) => setPassword(e.target.value)} required
+                    className="w-full py-2 px-4 mb-3 border rounded text-start text-sm"
+                    placeholder="Mật khẩu"
+                />
+
+
                 <button className="w-full mt-4 bg-[#ee4d2d] text-white py-3 rounded hover:bg-orange-600">
                     ĐĂNG NHẬP
                 </button>
