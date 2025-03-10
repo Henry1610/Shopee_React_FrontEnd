@@ -16,8 +16,10 @@
         const [cart, setCart] = useState(() => {
             return JSON.parse(localStorage.getItem(cartKey)) || [];
         });
+        
         useEffect(() => {
             if (currentUser) {
+                
                 localStorage.setItem(cartKey, JSON.stringify(cart));
             }
         }, [cart]);
@@ -82,7 +84,7 @@
             );
         };
         return (
-            <CartContext.Provider value={{ cart, addToCart, removeCart, increaseQuantity, decreaseQuantity }}>
+            <CartContext.Provider value={{ cart, setCart,addToCart, removeCart, increaseQuantity, decreaseQuantity }}>
                 {children}
             </CartContext.Provider>
         );

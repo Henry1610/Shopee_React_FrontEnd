@@ -14,11 +14,13 @@ function Navbar() {
     useEffect(() => {
         const user = localStorage.getItem("currentUser");
         setCurrentUser(user);
+
     }, []);
 
     const handleLogout = () => {
         localStorage.removeItem("currentUser");
         setCurrentUser(null);
+        
         window.location.reload(); // Reload trang để cập nhật giao diện
     };
     return (

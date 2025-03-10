@@ -4,21 +4,24 @@ import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
-
 function LoginForm({ switchToRegister }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const { setCart } = useContext(CartContext); // 🔥 Lấy setCart từ context
+
     const navigate = useNavigate();
     const handleLogin = (e) => {
         e.preventDefault();
-
+        
         let users = JSON.parse(localStorage.getItem(`users`)) || [];
         const user = users.find(u => u.email === email && u.password === password)
 
         if (user) {
             localStorage.setItem("currentUser", email);
-            alert("Đăng nhập thành công!");
+            const saveCart=JSON.parse(localStorage.getItem(`cart_${email}`))
+            setCart(saveCart)
             navigate("/");
+
         } else {
             alert("Sai email hoặc mật khẩu!");
         }
