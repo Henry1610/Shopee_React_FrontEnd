@@ -46,7 +46,7 @@ export default function Banner({ images }) {
 
     ]
     return (
-        <div className="flex justify-center bg-white ">
+        <div className="flex justify-center bg-white pt-[90px]">
             <div className="grid grid-cols-10 py-7 max-w-[1200px] gap-1 mx-auto">
 
                 {/* Phần Swiper (chiếm 6 cột) */}

@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import images from "../../assets/images";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {  faShoppingCart } from '@fortawesome/free-solid-svg-icons';
-import { useEffect,useState } from "react";
+import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from "react";
 import './Navbar.css';
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
@@ -14,17 +14,15 @@ function Navbar() {
     useEffect(() => {
         const user = localStorage.getItem("currentUser");
         setCurrentUser(user);
-
     }, []);
 
     const handleLogout = () => {
         localStorage.removeItem("currentUser");
         setCurrentUser(null);
-        
-        window.location.reload(); // Reload trang để cập nhật giao diện
+        //window.location.reload(); // Reload trang để cập nhật giao diện
     };
     return (
-        <div className=" bg-gradient-to-t from-[#ee4d2d] to-[#d0011b]  text-white ">
+        <div className="fixed top-0 left-0 w-full bg-gradient-to-t from-[#ee4d2d] to-[#d0011b] text-white z-50">
             <div className="max-w-[1200px] w-full mx-auto px-[1rem]">
                 {/* Top Banner */}
                 <div className="flex justify-between items-center text-xs font-normal p-1">
@@ -67,11 +65,12 @@ function Navbar() {
 
                     {/* Search Bar */}
 
-                    <Search/>
+                    <Search />
 
                     {/* Cart */}
                     <div className="relative">
-                        <Link to="/carts" className="relative text-white hover:text-gray-200">
+
+                        <Link to={localStorage.getItem('currentUser') ? "/carts" : "/login"} className="relative text-white hover:text-gray-200">
                             <FontAwesomeIcon icon={faShoppingCart} className="h-6 w-6" />
                             {cart.length > 0 && (
                                 <span className="absolute -top-5 -right-4 bg-white text-[#ee4d2d] text-sm font-bold px-2 py-[1x] rounded-md">

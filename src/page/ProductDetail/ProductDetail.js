@@ -56,7 +56,7 @@ function ProductDetail() {
         <Wrapper>
 
             <div>
-                <div className="grid grid-cols-1 md:grid-cols-5 p-3 bg-white">
+                <div className="grid grid-cols-1 md:grid-cols-5 p-3 bg-white ">
 
                     <div className="col-span-2">
                         <div>
@@ -262,7 +262,7 @@ function ProductDetail() {
                             <div className="flex flex-wrap space-x-2 items-center  gap-1 ">
                                 <button className="border px-4 py-2 text-sm rounded  bg-white hover:bg-[#ee4d2d] hover:text-white   ">Tất Cả</button>
                                 <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">5 Sao</button>
-                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">4 Sao (2)</button>
+                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">4 Sao ({})</button>
                                 <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">3 Sao (0)</button>
                                 <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">2 Sao (0)</button>
                                 <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">1 Sao (0)</button>

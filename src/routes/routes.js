@@ -9,6 +9,6 @@ import ProductList from "../components/CategoryList/ProductList";
   {path:'/carts',component:Carts},
   {path:'/login',component:Login},
   {path:'/products/:id',component:ProductDetail},
-  {path:'/products/category/:category',component:Category },
+  {path:'/products',component:Category },
 ]
 export default routes

@@ -129,7 +129,7 @@ function Home() {
                 <div className="my-4 bg-white border-b-2 border-[#EE4D2D] text-center p-4">
                     <span className="text-[#EE4D2D] text-xl font-bold ">GỢI Ý HÔM NAY</span>
                 </div>
-                <ProductList />
+                <ProductList  />
                 <Commit />
                 <Footer />
             </Wrapper>

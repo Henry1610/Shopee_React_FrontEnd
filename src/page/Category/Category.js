@@ -3,7 +3,9 @@ import ProductList from "../../components/CategoryList/ProductList";
 import Wrapper from "../../components/Wrapper";
 import Footer from "../../layouts/Footer/Footer";
 import Navbar from "../../layouts/Navbar";
-
+import useFetch from "../../useFetch";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 const categories = ["Mỹ phẩm", "Điện tử", "Thời trang", "Gia dụng"];
 const brands = ["Apple", "Samsung", "Nike", "Adidas"];
 const discounts = ["10%", "20%", "50%"];
@@ -11,27 +13,66 @@ const ratings = [4, 5];
 const availability = ["Còn hàng", "Sắp hết hàng", "Hết hàng"];
 const sortOptions = ["Giá tăng dần", "Giá giảm dần", "Bán chạy nhất", "Đánh giá cao nhất"];
 
+
 function Category() {
-    const {category}=useParams()
+    const { category } = useParams()
+    const { data, loading, err } = useFetch('https://dummyjson.com/products/category-list')
+    const [visibleCount, setVisibleCount] = useState(4);
+    const [searchParams, setSearchParams] = useSearchParams();
+    const handleToggle = () => {
+        setVisibleCount(visibleCount === 4 ? 7 : 4);
+    };
+    const updateFilter = (key, value) => {
+        const currentParams = new URLSearchParams(searchParams)//lấy url
+        let arrayValue = currentParams.get(key)?.split(",") || []//chuyển thành mảng ngăn cách bằng dấu ,
+        if (arrayValue.includes(value)) {
+            arrayValue = arrayValue.filter(v => v !== value)
+        }
+        else {
+            arrayValue.push(value)
+        }
+
+        if (arrayValue.length > 0) {
+            currentParams.set(key, arrayValue.join(","))//chuyển lại thành chuỗi
+        }
+        else {
+            currentParams.delete(key)
+        }
+        setSearchParams(currentParams)
+    }
+
     return (
         <div>
             <Navbar />
             <Wrapper>
 
 
-                <div className="grid grid-cols-5 mt-5 border-b-2 border-[#ee4d2d]">
+                <div className="grid grid-cols-5 mt-5 border-b-2 border-[#ee4d2d] pt-[100px] pb-3">
                     <div className="col-span-1">
                         <h2 className="text-lg font-semibold mb-3">Bộ lọc</h2>
 
                         {/* Danh mục sản phẩm */}
-                        <div>
-                            <h3 className="font-semibold">Danh mục</h3>
-                            {categories.map((cat) => (
-                                <label key={cat} className="block">
-                                    <input type="checkbox" className="mr-2" /> {cat}
-                                </label>
-                            ))}
-                        </div>
+                        {data && data.length > 0 ? (
+                            <>
+                                {data.slice(0, visibleCount).map((cat, index) => (
+                                    <label key={index} className="block">
+                                        <input type="checkbox"
+                                            className="mr-2"
+                                            onChange={e => updateFilter("category", cat)} /> {cat}
+                                    </label>
+                                ))}
+                                {data.length > 4 && (
+                                    <button
+                                        onClick={handleToggle}
+                                        className="mt-2 text-blue-500 hover:underline"
+                                    >
+                                        {visibleCount === 4 ? "Xem thêm" : "Thu gọn"}
+                                    </button>
+                                )}
+                            </>
+                        ) : (
+                            !loading && <p>Không có danh mục nào.</p>
+                        )}
 
                         {/* Khoảng giá */}
                         <div className="mt-3">
@@ -92,10 +133,10 @@ function Category() {
                         </div>
                     </div>
                     <div className="col-span-4 ">
-                        <ProductList category={category}/>
+                        <ProductList category={category} />
                     </div>
                 </div>
-                <Footer/>
+                <Footer />
             </Wrapper>
 
 

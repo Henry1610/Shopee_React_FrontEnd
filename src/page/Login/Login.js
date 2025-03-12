@@ -6,8 +6,7 @@ import RegisterForm from "../../components/RegisterForm";
 
 function Login() {
     const [isLogin,setLogin]=useState(true)
-    const [email, setEmail] = useState('')
-    const [passwod, setPassword] = useState('')
+    
     return (
         <div>
             <div className="items-center m-5">
