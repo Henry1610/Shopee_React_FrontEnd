@@ -53,22 +53,22 @@ function Search() {
                 interactive
                 visible={hide && resultInput.length > 0}
                 render={(attrs => (<div tabIndex="-1" {...attrs}>
-                    <table className="bg-white shadow-lg rounded-md w- border w-full  lg:w-[800px] text-black " >
-                        <thead >
-                            <tr className="bg-gray-100">
-                                <th className="px-3 py-1 text-left ">Sản phẩm</th>
-                            </tr>
-                        </thead>
-                        <tbody className='flex flex-col'>
+                    <div className="bg-white shadow-lg rounded-md w- border w-full  lg:w-[800px] text-black " >
+                        <div >
+                            <div className="bg-gray-100">
+                                <div className="px-3 py-1 text-left ">Sản phẩm</div>
+                            </div>
+                        </div>
+                        <div className='flex flex-col'>
                             {products.length === 0 ? <div className='text-center text-lg p-3 rounded-md'>Không tìm thấy sản phẩm!</div> : products.map((product) => (
                                 <Link to={`/products/${product.id}`} className="border-b" key={product.id}>
 
-                                    <td className="px-3 py-1">{product.title}</td>
+                                    <div className="px-3 py-1">{product.title}</div>
 
                                 </Link>
                             ))}
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>))}>
                 <div className="flex-1  relative ">
                     <input

@@ -25,7 +25,7 @@ function Home() {
             <Navbar />
             <Banner images={imagesBanner} />
 
-            <Wrapper>
+            <div className=" max-w-[1200px] mx-auto  bg-gray-100 ">
                 <CategoryList />
 
                 {/* Shopee Mall Section */}
@@ -132,7 +132,7 @@ function Home() {
                 <ProductList  />
                 <Commit />
                 <Footer />
-            </Wrapper>
+            </div>
         </div>
     );
 }

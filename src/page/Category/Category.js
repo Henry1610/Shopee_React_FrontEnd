@@ -1,21 +1,18 @@
-import { useParams } from "react-router-dom";
 import ProductList from "../../components/CategoryList/ProductList";
 import Wrapper from "../../components/Wrapper";
 import Footer from "../../layouts/Footer/Footer";
 import Navbar from "../../layouts/Navbar";
 import useFetch from "../../useFetch";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
-const categories = ["Mỹ phẩm", "Điện tử", "Thời trang", "Gia dụng"];
-const brands = ["Apple", "Samsung", "Nike", "Adidas"];
-const discounts = ["10%", "20%", "50%"];
-const ratings = [4, 5];
-const availability = ["Còn hàng", "Sắp hết hàng", "Hết hàng"];
-const sortOptions = ["Giá tăng dần", "Giá giảm dần", "Bán chạy nhất", "Đánh giá cao nhất"];
 
+const discounts = ["5", "10", "15", "20"];
+const ratings = [2, 3, 4, 5];
+const availability = ["Còn hàng", "Sắp hết hàng", "Hết hàng"];
+const sortOptions = ["Giá tăng dần", "Giá giảm dần", "Đánh giá cao nhất"];
+const price = [[0, 10000], [5, 10], [11, 50], [51, 100]]
 
 function Category() {
-    const { category } = useParams()
     const { data, loading, err } = useFetch('https://dummyjson.com/products/category-list')
     const [visibleCount, setVisibleCount] = useState(4);
     const [searchParams, setSearchParams] = useSearchParams();
@@ -39,6 +36,27 @@ function Category() {
             currentParams.delete(key)
         }
         setSearchParams(currentParams)
+    }
+    const updateFilterRadio = (key, value) => {
+
+
+        const currentParams = new URLSearchParams(searchParams); // Lấy URL
+        if (Array.isArray(value)) {
+            currentParams.set(`${key}_min`, value[0]); // price_min=0
+            currentParams.set(`${key}_max`, value[1]); // price_max=10000
+        }
+        else {
+            currentParams.set(key, value); // Cập nhật giá trị duy nhất
+
+        }
+        setSearchParams(currentParams);
+    }
+    function removeVietnameseTones(str) {
+        return str.normalize("NFD") // Tách dấu khỏi chữ cái
+            .replace(/[\u0300-\u036f]/g, "") // Xóa dấu
+            .replace(/đ/g, "d").replace(/Đ/g, "D") // Chuyển "đ" thành "d"
+            .replace(/\s+/g, "") // Xóa dấu cách
+            .toLowerCase(); // Chuyển thành chữ thường
     }
 
     return (
@@ -77,11 +95,30 @@ function Category() {
                         {/* Khoảng giá */}
                         <div className="mt-3">
                             <h3 className="font-semibold">Khoảng giá</h3>
-                            <input type="number" placeholder="Từ" className="w p-1 border rounded" />
-                            <input type="number" placeholder="Đến" className="w p-1 border rounded mt-1" />
+                            <select
+                                className="w-full p-1 border rounded"
+                                onChange={(e) => {
+                                    const value =  e.target.value.split(",").map(Number) ;
+                                    if(value)
+                                    {
+                                        updateFilterRadio("price", value);
+
+                                    }
+                                }}
+                            >
+                                <option value=" ">Chọn</option>
+
+                                {price.map((v, index) => (
+                                    <option className="font-medium" key={index} value={v.join(",")}>
+                                        {v[0].toFixed(2)} $ - {v[1].toFixed(2)} $
+                                    </option>
+                                ))}
+                            </select>
+
+
                         </div>
 
-                        {/* Thương hiệu */}
+                        {/* Thương hiệu
                         <div className="mt-3">
                             <h3 className="font-semibold">Thương hiệu</h3>
                             {brands.map((brand) => (
@@ -89,14 +126,14 @@ function Category() {
                                     <input type="checkbox" className="mr-2" /> {brand}
                                 </label>
                             ))}
-                        </div>
+                        </div> */}
 
                         {/* Đánh giá */}
                         <div className="mt-3">
                             <h3 className="font-semibold">Đánh giá</h3>
                             {ratings.map((rate) => (
                                 <label key={rate} className="block">
-                                    <input type="radio" name="rating" className="mr-2" /> {rate} sao trở lên
+                                    <input type="radio" name="rating" value={rate} className="mr-2" onChange={() => updateFilterRadio('rate', rate)} /> {rate} sao trở lên
                                 </label>
                             ))}
                         </div>
@@ -106,7 +143,7 @@ function Category() {
                             <h3 className="font-semibold">Tình trạng hàng</h3>
                             {availability.map((status) => (
                                 <label key={status} className="block">
-                                    <input type="radio" name="availability" className="mr-2" /> {status}
+                                    <input type="radio" name="availability" className="mr-2" value={status} onChange={() => { updateFilterRadio('condition', removeVietnameseTones(status)) }} /> {status}
                                 </label>
                             ))}
                         </div>
@@ -116,7 +153,7 @@ function Category() {
                             <h3 className="font-semibold">Giảm giá</h3>
                             {discounts.map((disc) => (
                                 <label key={disc} className="block">
-                                    <input type="radio" name="discount" className="mr-2" /> {disc} trở lên
+                                    <input type="radio" name="discount" className="mr-2" value={disc} onChange={() => updateFilterRadio('discount', disc)} /> {disc}% trở lên
                                 </label>
                             ))}
                         </div>
@@ -124,8 +161,17 @@ function Category() {
                         {/* Sắp xếp */}
                         <div className="mt-3">
                             <h3 className="font-semibold">Sắp xếp theo</h3>
-                            <select className="w-full p-1 border rounded">
-                                <option value="">Chọn</option>
+                            <select className="w-full p-1 border rounded"
+                                onChange={(e) => {
+                                    const value = removeVietnameseTones(e.target.value)
+                                    if (value) {
+                                        updateFilterRadio('sort', value)
+                                    }
+                                    else{
+                                        return
+                                    }
+                                }}>
+                                <option value=" ">Chọn</option>
                                 {sortOptions.map((option) => (
                                     <option key={option} value={option}>{option}</option>
                                 ))}
@@ -133,7 +179,7 @@ function Category() {
                         </div>
                     </div>
                     <div className="col-span-4 ">
-                        <ProductList category={category} />
+                        <ProductList />
                     </div>
                 </div>
                 <Footer />

@@ -3,7 +3,6 @@ import Category from "../page/Category";
 import Home from "../page/Home";
 import Login from "../page/Login";
 import ProductDetail from "../page/ProductDetail/ProductDetail";
-import ProductList from "../components/CategoryList/ProductList";
  const routes=[
   {path:'/',component:Home},
   {path:'/carts',component:Carts},

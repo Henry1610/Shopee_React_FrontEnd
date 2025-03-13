@@ -53,10 +53,10 @@ function ProductDetail() {
 
 
         <Navbar />
-        <Wrapper>
+        <Wrapper >
 
-            <div>
-                <div className="grid grid-cols-1 md:grid-cols-5 p-3 bg-white ">
+            <div className="">
+                <div className="grid grid-cols-1 md:grid-cols-5 p-3 bg-white top-0 ">
 
                     <div className="col-span-2">
                         <div>
