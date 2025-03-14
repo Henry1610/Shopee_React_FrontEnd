@@ -73,7 +73,7 @@ function Search() {
                 <div className="flex-1  relative ">
                     <input
                         onFocus={() => setHide(true)}
-                        onChange={handleChange}
+                        onChange={(e)=>handleChange(e)}
                         type="text"
                         placeholder="Shopee bao ship 0Đ - Đăng ký ngay!"
                         className="w-full  lg:w-[800px] text-black p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 "

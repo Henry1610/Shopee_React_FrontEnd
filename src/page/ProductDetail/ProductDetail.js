@@ -3,21 +3,36 @@ import Navbar from "../../layouts/Navbar";
 import Wrapper from "../../components/Wrapper";
 import { faFacebook, faFacebookMessenger, faTwitter, faPinterest } from "@fortawesome/free-brands-svg-icons";
 import MostLike from "../../components/MostLike";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import useFetch from "../../useFetch";
 import { useContext, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import Swal from "sweetalert2";
+import { faShieldHalved, faTruck, faArrowLeft, faStore } from "@fortawesome/free-solid-svg-icons";
 
 
-
+const ratings = [
+    { stars: "Tất Cả", count: null },
+    { stars: 5, count: null },
+    { stars: 4, count: 10 },
+    { stars: 3, count: 0 },
+    { stars: 2, count: 0 },
+    { stars: 1, count: 0 },
+];
+const services = [
+    { icon: faShieldHalved, title: "Guarantee", subtitle: "Quality Checked" },
+    { icon: faTruck, title: "Free Shipping", subtitle: "Free On All Products" },
+    { icon: faArrowLeft, title: "Free Return", subtitle: "Within 7 Days" },
+    { icon: faStore, title: "Consultancy", subtitle: "Lifetime 24/7/365" },
+];
 
 function ProductDetail() {
     const [numberProduct, setNumberProduct] = useState(1)
-
+    const [searchParams, setSearchParams] = useSearchParams()
     const { addToCart } = useContext(CartContext)
     const { id } = useParams();
     const { data, loading, error } = useFetch(`https://dummyjson.com/products/${id}`)
+    const rate=searchParams.get('rate')
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
     if (!data) return <p>No data available</p>; // Tránh lỗi khi data là null
@@ -49,6 +64,13 @@ function ProductDetail() {
             setNumberProduct(prev => prev - 1);
         }
     };
+    const handleChoose = (key, value) => {
+        
+        const url = new URLSearchParams(searchParams)
+        url.set(key, value === 'Tất Cả' ? 0 : value);
+        setSearchParams(url)
+
+    }
     return (<div className="max-w-[2000px]">
 
 
@@ -119,28 +141,50 @@ function ProductDetail() {
                             <span class="bg-red-100 text-red-500 px-3 py-1 rounded">Giảm ₫30k</span>
                         </div>
 
-                        <div class="mt-3 text-gray-600">
-                            <p>🚚 Nhận từ <strong>7 Th03 - 11 Th03</strong></p>
-                            <p class="text-green-600">Miễn phí vận chuyển</p>
-                        </div>
+                        <div class=" text-gray-600 flex flex-row">
+                            <div className="mt-3">
+                                <div className="max-w-md mx-auto bg-white p-4 rounded-lg ">
+                                    <ul className="list-disc pl-5 space-y-2 text-gray-700 ">
+                                        <li>
+                                            <span className="font-semibold">Brand:</span> {data.brand}
+                                        </li>
+                                        <li>
+                                            <span className="font-semibold">SKU:</span> {data.sku}
+                                        </li>
+                                        <li>
+                                            <span className="font-semibold">Weight:</span> {data.weight} g
+                                        </li>
+                                        <li>
+                                            <span className="font-semibold">Dimensions:</span>
+                                            <ul className="list-disc pl-5 space-y-1 text-gray-600 ">
+                                                <li className="mt-3">Width: {data.dimensions.width} cm</li>
+                                                <li>Height: {data.dimensions.height} cm</li>
+                                                <li>Depth: {data.dimensions.depth} cm</li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div className=" mx-auto space-y-4">
+                                {services.map((service, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center bg-white border border-gray-300  p-2 w-[300px] p-3"
+                                    >
+                                        <div className=" text-white rounded-full">
+                                            <FontAwesomeIcon icon={service.icon} className="text-black text-xl" />
 
-                        <div class="mt-4">
-                            <h3 class="font-semibold">Màu:</h3>
-                            <div class="flex space-x-2 mt-2">
-                                <button class="border px-4 py-2 rounded hover:bg-gray-100">Trắng</button>
-                                <button class="border px-4 py-2 rounded hover:bg-gray-100">Đen</button>
-                                <button class="border px-4 py-2 rounded opacity-50 cursor-not-allowed">Đỏ</button>
+                                        </div>
+                                        <div className="ml-4">
+                                            <h5 className="text-md font-semibold">{service.title}</h5>
+                                            <p className="text-gray-500 text-xs">{service.subtitle}</p>
+                                        </div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
-                        <div class="mt-4">
-                            <h3 class="font-semibold">Size:</h3>
-                            <div class="flex space-x-2 mt-2">
-                                <button class="border px-4 py-2 rounded hover:bg-gray-100">M</button>
-                                <button class="border px-4 py-2 rounded hover:bg-gray-100">L</button>
-                                <button class="border px-4 py-2 rounded hover:bg-gray-100">XL</button>
-                            </div>
-                        </div>
+
 
                         <div class="mt-4 flex items-center" >
                             <h3 class="font-semibold">Số lượng:</h3>
@@ -154,7 +198,7 @@ function ProductDetail() {
 
 
                         <div class="mt-6 flex space-x-4">
-                            <button class="w-[170px] bg-orange-500 text-white py-2  hover:bg-orange-600" onClick={() => addToCart(data, 4)}>Thêm Vào Giỏ Hàng</button>
+                            <button class="w-[170px] bg-orange-500 text-white py-2  hover:bg-orange-600" onClick={() => addToCart(data, numberProduct)}>Thêm Vào Giỏ Hàng</button>
                             <button class="w-[170px] bg-red-500 text-white py-2  hover:bg-red-600">Mua Ngay</button>
                         </div>
                     </div>
@@ -258,17 +302,19 @@ function ProductDetail() {
                         </div>
 
                         {/* Phần bộ lọc đánh giá */}
-                        <div className="flex flex-col w-full md:w-auto gap-3 font-medium rounded-md ">
-                            <div className="flex flex-wrap space-x-2 items-center  gap-1 ">
-                                <button className="border px-4 py-2 text-sm rounded  bg-white hover:bg-[#ee4d2d] hover:text-white   ">Tất Cả</button>
-                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">5 Sao</button>
-                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">4 Sao ({})</button>
-                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">3 Sao (0)</button>
-                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">2 Sao (0)</button>
-                                <button className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white    ">1 Sao (0)</button>
+                        <div className="flex flex-col w-full md:w-auto gap-3 font-medium rounded-md">
+                            <div className="flex flex-wrap space-x-2 items-center gap-1">
+                                {ratings.map((rating, index) => (
+                                    
+                                    <button
+                                        key={index}
+                                        className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white"
+                                        onClick={()=>handleChoose('rate',rating.stars)}
+                                    >
+                                        {rating.stars} Sao {rating.count !== null ? `(${rating.count})` : ""}
+                                    </button>
+                                ))}
                             </div>
-
-                            
                         </div>
                     </div>
                 </div>
@@ -278,7 +324,7 @@ function ProductDetail() {
 
 
                 <div className="mt-6 border-t pt-4">
-                    {data.reviews.map((review, index) => (
+                    {data.reviews.filter(review => rate === 0||rate<=review.rating).map((review, index) => (
 
                         <div key={index} className="flex space-x-4 mb-4" >
                             <img

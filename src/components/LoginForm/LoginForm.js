@@ -19,7 +19,11 @@ function LoginForm({ switchToRegister }) {
         if (user) {
             localStorage.setItem("currentUser", email);
             const saveCart=JSON.parse(localStorage.getItem(`cart_${email}`))
-            setCart(saveCart)
+            if (saveCart) {
+                setCart(saveCart);
+            } else {
+                setCart([]);
+            }
             navigate("/");
 
         } else {

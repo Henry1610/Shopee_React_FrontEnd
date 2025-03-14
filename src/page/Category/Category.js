@@ -14,12 +14,24 @@ const price = [[0, 10000], [5, 10], [11, 50], [51, 100]]
 
 function Category() {
     const { data, loading, err } = useFetch('https://dummyjson.com/products/category-list')
+
     const [visibleCount, setVisibleCount] = useState(4);
     const [searchParams, setSearchParams] = useSearchParams();
+
+    const selectedCategories = searchParams.get("category")?.split(",") || [];
+    const selectedRate = searchParams.get('rate') || 1
+    const selectedCondition = searchParams.get("condition");
+    const selectedDiscount = searchParams.get("discount");
+    const selectedSort = searchParams.get("sort");
+    const price_min = searchParams.get("price_min") || 0; // Giá thấp nhất (mặc định 0)
+    const price_max = searchParams.get("price_max") || Infinity; // Giá cao nhất (mặc định vô hạn)
+
     const handleToggle = () => {
         setVisibleCount(visibleCount === 4 ? 7 : 4);
     };
+
     const updateFilter = (key, value) => {
+
         const currentParams = new URLSearchParams(searchParams)//lấy url
         let arrayValue = currentParams.get(key)?.split(",") || []//chuyển thành mảng ngăn cách bằng dấu ,
         if (arrayValue.includes(value)) {
@@ -74,7 +86,9 @@ function Category() {
                             <>
                                 {data.slice(0, visibleCount).map((cat, index) => (
                                     <label key={index} className="block">
-                                        <input type="checkbox"
+                                        <input 
+                                        checked={selectedCategories.includes(cat)}
+                                        type="checkbox"
                                             className="mr-2"
                                             onChange={e => updateFilter("category", cat)} /> {cat}
                                     </label>
@@ -97,6 +111,7 @@ function Category() {
                             <h3 className="font-semibold">Khoảng giá</h3>
                             <select
                                 className="w-full p-1 border rounded"
+                                checke
                                 onChange={(e) => {
                                     const value =  e.target.value.split(",").map(Number) ;
                                     if(value)
@@ -109,7 +124,8 @@ function Category() {
                                 <option value=" ">Chọn</option>
 
                                 {price.map((v, index) => (
-                                    <option className="font-medium" key={index} value={v.join(",")}>
+                                    <option className="font-medium" key={index} value={v.join(",")}  >
+                                        
                                         {v[0].toFixed(2)} $ - {v[1].toFixed(2)} $
                                     </option>
                                 ))}
@@ -133,7 +149,7 @@ function Category() {
                             <h3 className="font-semibold">Đánh giá</h3>
                             {ratings.map((rate) => (
                                 <label key={rate} className="block">
-                                    <input type="radio" name="rating" value={rate} className="mr-2" onChange={() => updateFilterRadio('rate', rate)} /> {rate} sao trở lên
+                                    <input type="radio" name="rating" checked={parseInt(selectedRate)===parseInt(rate)} value={rate} className="mr-2" onChange={() => updateFilterRadio('rate', rate)} /> {rate} sao trở lên
                                 </label>
                             ))}
                         </div>
@@ -143,7 +159,7 @@ function Category() {
                             <h3 className="font-semibold">Tình trạng hàng</h3>
                             {availability.map((status) => (
                                 <label key={status} className="block">
-                                    <input type="radio" name="availability" className="mr-2" value={status} onChange={() => { updateFilterRadio('condition', removeVietnameseTones(status)) }} /> {status}
+                                    <input type="radio" name="availability" checked={selectedCondition===removeVietnameseTones(status)} className="mr-2" value={status} onChange={() => { updateFilterRadio('condition', removeVietnameseTones(status)) }} /> {status}
                                 </label>
                             ))}
                         </div>
@@ -153,7 +169,7 @@ function Category() {
                             <h3 className="font-semibold">Giảm giá</h3>
                             {discounts.map((disc) => (
                                 <label key={disc} className="block">
-                                    <input type="radio" name="discount" className="mr-2" value={disc} onChange={() => updateFilterRadio('discount', disc)} /> {disc}% trở lên
+                                    <input type="radio" name="discount" className="mr-2" checked={selectedDiscount===disc} value={disc} onChange={() => updateFilterRadio('discount', disc)} /> {disc}% trở lên
                                 </label>
                             ))}
                         </div>

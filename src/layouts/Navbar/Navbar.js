@@ -10,7 +10,7 @@ import Search from "../../components/Search/Search";
 function Navbar() {
     const { cart } = useContext(CartContext)
     const [currentUser, setCurrentUser] = useState(null);
-
+    const {setCart}=useContext(CartContext)
     useEffect(() => {
         const user = localStorage.getItem("currentUser");
         setCurrentUser(user);
@@ -18,6 +18,7 @@ function Navbar() {
 
     const handleLogout = () => {
         localStorage.removeItem("currentUser");
+        setCart([])
         setCurrentUser(null);
         //window.location.reload(); // Reload trang để cập nhật giao diện
     };
