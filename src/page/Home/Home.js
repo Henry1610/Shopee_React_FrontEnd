@@ -7,6 +7,7 @@ import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
 import ProductList from "../../components/CategoryList/ProductList";
 import Footer from "../../layouts/Footer/Footer";
 import Commit from "../../components/Commit";
+import { Link } from "react-router-dom";
 const imagesBanner = [
     "https://cf.shopee.vn/file/vn-11134258-7ras8-m5184szf0klz56_xxhdpi",
     "https://cf.shopee.vn/file/sg-11134258-7rd4e-m6rq5u5jrr8b35_xxhdpi",
@@ -64,7 +65,7 @@ function Home() {
 
                         {/* Nút "Xem tất cả" */}
                         <div className="flex items-center text-[#EE4D2D] font-medium hover:underline cursor-pointer sm:text-sm">
-                            <span className="text-lg sm:text-base">Xem tất cả</span>
+                            <Link to="/products"><span className="text-lg sm:text-base">Xem tất cả</span></Link>
                             <FontAwesomeIcon icon={faCircleChevronRight} className="ml-1 sm:text-sm" />
                         </div>
                     </div>

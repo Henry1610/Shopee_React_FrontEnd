@@ -2,10 +2,11 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react/headless'; // different import path!
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useParams, useSearchParams } from "react-router-dom";
 
 import useFetch from '../../useFetch/useFetch';
 function Search() {
+    const [searchParams,setSearchParams]=useSearchParams()
     const [resultInput, setResultInput] = useState('')
     const [products, setProductsList] = useState([])
     const [categories, setCategories] = useState([]); // ✅ State để lưu danh mục
@@ -16,7 +17,7 @@ function Search() {
     const [hide, setHide] = useState(true)
 
 
-
+    
     useEffect(() => {
 
 
@@ -90,7 +91,7 @@ function Search() {
             <div className="w-full flex flex-wrap gap-2 text-xs text-white mt-2 ">
                 {categories.map((category, index) => (
                     index < 11 && ( // ✅ Chỉ render nếu index < 5
-                        <Link key={index} to={`/products/category/${category}`} className="hover:underline "     >
+                        <Link key={index} to={`/products?category=${category}`} className="hover:underline "     >
                             {category}
                         </Link>
                     )

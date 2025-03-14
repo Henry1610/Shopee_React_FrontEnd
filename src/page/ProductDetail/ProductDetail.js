@@ -12,12 +12,12 @@ import { faShieldHalved, faTruck, faArrowLeft, faStore } from "@fortawesome/free
 
 
 const ratings = [
-    { stars: "Tất Cả", count: null },
-    { stars: 5, count: null },
-    { stars: 4, count: 10 },
-    { stars: 3, count: 0 },
-    { stars: 2, count: 0 },
-    { stars: 1, count: 0 },
+    { stars: "Tất Cả" },
+    { stars: 5 },
+    { stars: 4 },
+    { stars: 3 },
+    { stars: 2 },
+    { stars: 1 },
 ];
 const services = [
     { icon: faShieldHalved, title: "Guarantee", subtitle: "Quality Checked" },
@@ -32,7 +32,7 @@ function ProductDetail() {
     const { addToCart } = useContext(CartContext)
     const { id } = useParams();
     const { data, loading, error } = useFetch(`https://dummyjson.com/products/${id}`)
-    const rate=searchParams.get('rate')
+    const rate=parseInt(searchParams.get('rate')) 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
     if (!data) return <p>No data available</p>; // Tránh lỗi khi data là null
@@ -169,13 +169,13 @@ function ProductDetail() {
                                 {services.map((service, index) => (
                                     <div
                                         key={index}
-                                        className="flex items-center bg-white border border-gray-300  p-2 w-[300px] p-3"
+                                        className="flex items-center bg-white border border-gray-300   w-[300px] p-3"
                                     >
                                         <div className=" text-white rounded-full">
                                             <FontAwesomeIcon icon={service.icon} className="text-black text-xl" />
 
                                         </div>
-                                        <div className="ml-4">
+                                        <div className="ml-4">a
                                             <h5 className="text-md font-semibold">{service.title}</h5>
                                             <p className="text-gray-500 text-xs">{service.subtitle}</p>
                                         </div>
@@ -311,7 +311,7 @@ function ProductDetail() {
                                         className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white"
                                         onClick={()=>handleChoose('rate',rating.stars)}
                                     >
-                                        {rating.stars} Sao {rating.count !== null ? `(${rating.count})` : ""}
+                                        {rating.stars} Sao 
                                     </button>
                                 ))}
                             </div>
@@ -324,7 +324,7 @@ function ProductDetail() {
 
 
                 <div className="mt-6 border-t pt-4">
-                    {data.reviews.filter(review => rate === 0||rate<=review.rating).map((review, index) => (
+                    {data.reviews.filter(review => rate === 0||rate===review.rating).map((review, index) => (
 
                         <div key={index} className="flex space-x-4 mb-4" >
                             <img

@@ -2,33 +2,32 @@ import { Star, ShoppingCart } from "lucide-react";
 import { data, Link, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
-import useFetch from "../../useFetch";
 
 function ProductList() {
     const { addToCart } = useContext(CartContext);
 
     const [searchParams] = useSearchParams();
+    
     const selectedCategories = searchParams.get("category")?.split(",") || [];
     const selectedRate = searchParams.get('rate') || 1
     const selectedCondition = searchParams.get("condition");
     const selectedDiscount = searchParams.get("discount");
     const selectedSort = searchParams.get("sort");
-    const price_min = searchParams.get("price_min") || 0; // Giá thấp nhất (mặc định 0)
-    const price_max = searchParams.get("price_max") || Infinity; // Giá cao nhất (mặc định vô hạn)
+    const price_min = searchParams.get("price_min") || 0; 
+    const price_max = searchParams.get("price_max") || Infinity;
 
 
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    //  const endpoint=category? `https://dummyjson.com/products/category/${category}`
-    //  : `https://dummyjson.com/products`;
+    
     useEffect(() => {
         if (selectedCategories.length === 0) {
             fetch(`https://dummyjson.com/products`)
                 .then(res => res.json())
                 .then(data => {
-                    setProducts(data.products.slice(0, 15)); // Giới hạn số lượng sản phẩm
+                    setProducts(data.products.slice(0, 15)); 
                     setLoading(false);
                 })
                 .catch(err => {
@@ -43,10 +42,6 @@ function ProductList() {
                 fetch(`https://dummyjson.com/products/category/${category}`)
                     .then(res => res.json())
                     .then(data => data.products.slice(0, 5))
-                    // .then(datas=>{
-                    //     const mergedProduct=datas.flatMap(data=>data.products)
-                    //     setProducts(mergedProduct)
-                    // })
                     .catch((err) => setError(err.message))
 
             )
@@ -68,10 +63,7 @@ function ProductList() {
         return "conhang";
     };
 
-    //     const filteredProducts = data.products.filter((product) => selectedCategories.includes(product.category))
-
-    // console.log("mang filter",filteredProducts);
-
+  
 
     return (
         <div className="flex pb-5 flex-wrap gap-3 mx-auto justify-center">

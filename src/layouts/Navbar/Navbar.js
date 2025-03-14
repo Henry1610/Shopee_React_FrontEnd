@@ -5,21 +5,38 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from "react";
 import './Navbar.css';
 import { useContext } from "react";
+import Swal from "sweetalert2";
+
 import { CartContext } from "../../context/CartContext";
 import Search from "../../components/Search/Search";
 function Navbar() {
     const { cart } = useContext(CartContext)
     const [currentUser, setCurrentUser] = useState(null);
-    const {setCart}=useContext(CartContext)
+    const { setCart } = useContext(CartContext)
     useEffect(() => {
         const user = localStorage.getItem("currentUser");
         setCurrentUser(user);
     }, []);
 
     const handleLogout = () => {
-        localStorage.removeItem("currentUser");
-        setCart([])
-        setCurrentUser(null);
+        Swal.fire(
+            {
+                title: "Bạn có chắc muốn đăng xuất?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Đăng xuất ngay!",
+                cancelButtonText: "Hủy",
+            }
+        ).then((result) => {
+            if (result.isConfirmed) {
+                localStorage.removeItem("currentUser");
+                setCart([])
+                setCurrentUser(null);
+            }
+        })
+
         //window.location.reload(); // Reload trang để cập nhật giao diện
     };
     return (
@@ -83,7 +100,7 @@ function Navbar() {
 
                 </div>
 
-                {/* Suggested Searches */}
+                
 
             </div>
         </div>

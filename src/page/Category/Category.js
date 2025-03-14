@@ -22,9 +22,7 @@ function Category() {
     const selectedRate = searchParams.get('rate') || 1
     const selectedCondition = searchParams.get("condition");
     const selectedDiscount = searchParams.get("discount");
-    const selectedSort = searchParams.get("sort");
-    const price_min = searchParams.get("price_min") || 0; // Giá thấp nhất (mặc định 0)
-    const price_max = searchParams.get("price_max") || Infinity; // Giá cao nhất (mặc định vô hạn)
+    
 
     const handleToggle = () => {
         setVisibleCount(visibleCount === 4 ? 7 : 4);
@@ -62,6 +60,9 @@ function Category() {
 
         }
         setSearchParams(currentParams);
+    }
+    const handleDeleteOption=()=>{
+        setSearchParams('')
     }
     function removeVietnameseTones(str) {
         return str.normalize("NFD") // Tách dấu khỏi chữ cái
@@ -111,7 +112,7 @@ function Category() {
                             <h3 className="font-semibold">Khoảng giá</h3>
                             <select
                                 className="w-full p-1 border rounded"
-                                checke
+                                
                                 onChange={(e) => {
                                     const value =  e.target.value.split(",").map(Number) ;
                                     if(value)
@@ -192,6 +193,10 @@ function Category() {
                                     <option key={option} value={option}>{option}</option>
                                 ))}
                             </select>
+                        </div>
+
+                        <div className="bg-red-500 shadow-md rounded-md mt-3">
+                            <button className="text-white font-bold  p-3" onClick={()=>handleDeleteOption()}>Xoá hết bộ lọc</button>
                         </div>
                     </div>
                     <div className="col-span-4 ">
