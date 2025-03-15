@@ -2,9 +2,12 @@ import { Star, ShoppingCart } from "lucide-react";
 import { Link, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
 
 function ProductList() {
     const { addToCart } = useContext(CartContext);
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     
@@ -16,8 +19,11 @@ function ProductList() {
     const price_min = searchParams.get("price_min") || 0; 
     const price_max = searchParams.get("price_max") || Infinity;
 
-
+    const currentUser=localStorage.getItem('currentUser')
+    console.log(currentUser);
+    
     const [products, setProducts] = useState([]);
+
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -132,7 +138,21 @@ function ProductList() {
 
                                 {/* Nút mua hàng */}
                                 <button
-                                    onClick={() => addToCart(product)}
+                                    onClick={()=>currentUser? addToCart(product):
+                                        Swal.fire({
+                                            title: 'Bạn chưa đăng nhập!',
+                                            text: 'Vui lòng đăng nhập để tiếp tục.',
+                                            icon: 'warning',
+                                            showCancelButton: true,
+                                            confirmButtonText: 'Đăng nhập',
+                                            cancelButtonText: 'Hủy'
+                                          }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                navigate("/login"); 
+                                            }
+                                          })
+                                          
+                                    }
                                     className="mt-3 w-full bg-[#ee4d2e] text-white py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-[#d23c1f] transition-all"
                                 >
                                     <ShoppingCart className="w-4 h-4" />

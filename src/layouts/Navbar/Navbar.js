@@ -65,7 +65,7 @@ function Navbar() {
                                 </>
                             ) : (
                                 <>
-                                    <Link to="/register" className="hover:underline">Đăng Ký</Link>
+                                    <Link to="/login" className="hover:underline">Đăng Ký</Link>
                                     <span className="mx-2">|</span>
                                     <Link to="/login" className="hover:underline">Đăng Nhập</Link>
                                 </>
