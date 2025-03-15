@@ -1,13 +1,62 @@
 import Banner from "../../components/Banner";
-import Navbar from "../../layouts/Navbar";
-import Wrapper from "../../components/Wrapper";
 import CategoryList from "../../components/CategoryList/CategoryList";
+import ProductList from "../../components/CategoryList/ProductList";
+import Commit from "../../components/Commit";
+import Navbar from "../../layouts/Navbar";
+import Footer from "../../layouts/Footer/Footer";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleChevronRight } from "@fortawesome/free-solid-svg-icons";
-import ProductList from "../../components/CategoryList/ProductList";
-import Footer from "../../layouts/Footer/Footer";
-import Commit from "../../components/Commit";
 import { Link } from "react-router-dom";
+
+const shopeeMallOffers = [
+    {
+        img: "https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/6c502a2641457578b0d5.png",
+        text: "Trả hàng miễn phí 15 ngày"
+    },
+    {
+        img: "https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/511aca04cc3ba9234ab0.png",
+        text: "Hàng chính hãng 100%"
+    },
+    {
+        img: "https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/16ead7e0a68c3cff9f32.png",
+        text: "Miễn phí vận chuyển"
+    }
+];
+const ShopeeMall=[
+    {
+        img: "https://down-vn.img.susercontent.com/file/5fb3f7b359a582f322ea39313e10260b@resize_w402_nl.webp",
+        text: "Mua 1 tặng 1",
+    },
+    {
+        img: "https://down-vn.img.susercontent.com/file/vn-50009109-7e80ab64bdc989f5c0862ed828f343a2@resize_w402_nl.webp",
+        text: "Ưu đãi đến 50%",
+    },
+    {
+        img: "https://down-vn.img.susercontent.com/file/vn-11134258-7r98o-lx6pdo1qwogrf1@resize_w402_nl.webp",
+        text: "Mua 1 được 2",
+    },
+    {
+        img: "https://down-vn.img.susercontent.com/file/vn-50009109-7ce7d5800afb2b6c80a7242236ec7409@resize_w402_nl.webp",
+        text: "Mua là có quà",
+    },
+    {
+        img: "https://down-vn.img.susercontent.com/file/vn-11134258-7ra0g-m6glb2udrprs42@resize_w402_nl.webp",
+        text: "Mua 1 tặng 1",
+    },
+    {
+        img: "https://down-vn.img.susercontent.com/file/be40023a9d9cff397a470460bc7a924d@resize_w402_nl.webp",
+        text: "Deli siêu sale",
+    },
+    {
+        img: "https://down-vn.img.susercontent.com/file/vn-11134258-7ras8-m4ycyi0ypc5414@resize_w402_nl.webp",
+        text: "Mua 1 tặng 1",
+    },
+    {
+        img: "https://down-vn.img.susercontent.com/file/vn-50009109-08a87dd1e828b4bef31dafa67d5300ec@resize_w402_nl.webp",
+        text: "Quà mọi đơn",
+    },
+]
 const imagesBanner = [
     "https://cf.shopee.vn/file/vn-11134258-7ras8-m5184szf0klz56_xxhdpi",
     "https://cf.shopee.vn/file/sg-11134258-7rd4e-m6rq5u5jrr8b35_xxhdpi",
@@ -19,6 +68,7 @@ const imagesBanner = [
     "https://cf.shopee.vn/file/sg-11134258-7rd45-m6ru35iyz5ex92_xxhdpi",
     "https://cf.shopee.vn/file/sg-11134258-7rd4y-m6p9hoevxgnveb_xxhdpi"
 ];
+
 
 function Home() {
     return (
@@ -41,20 +91,7 @@ function Home() {
 
                             {/* Danh sách ưu đãi */}
                             <div className="flex gap-6 flex-wrap sm:gap-3 sm:text-sm">
-                                {[
-                                    {
-                                        img: "https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/6c502a2641457578b0d5.png",
-                                        text: "Trả hàng miễn phí 15 ngày",
-                                    },
-                                    {
-                                        img: "https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/511aca04cc3ba9234ab0.png",
-                                        text: "Hàng chính hãng 100%",
-                                    },
-                                    {
-                                        img: "https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/homepagefe/16ead7e0a68c3cff9f32.png",
-                                        text: "Miễn phí vận chuyển",
-                                    }
-                                ].map((item, index) => (
+                                {shopeeMallOffers.map((item, index) => (
                                     <div key={index} className="flex items-center gap-2 sm:gap-1">
                                         <img className="w-6 sm:w-5" src={item.img} alt={item.text} />
                                         <span className="text-base sm:text-xs">{item.text}</span>
@@ -82,40 +119,7 @@ function Home() {
 
                         {/* Danh sách ưu đãi */}
                         <div className="grid grid-cols-4 sm:grid-cols-2 md:grid-cols-4 gap-4 col-span-4 content-center ml-3">
-                            {[
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/5fb3f7b359a582f322ea39313e10260b@resize_w402_nl.webp",
-                                    text: "Mua 1 tặng 1",
-                                },
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/vn-50009109-7e80ab64bdc989f5c0862ed828f343a2@resize_w402_nl.webp",
-                                    text: "Ưu đãi đến 50%",
-                                },
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/vn-11134258-7r98o-lx6pdo1qwogrf1@resize_w402_nl.webp",
-                                    text: "Mua 1 được 2",
-                                },
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/vn-50009109-7ce7d5800afb2b6c80a7242236ec7409@resize_w402_nl.webp",
-                                    text: "Mua là có quà",
-                                },
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/vn-11134258-7ra0g-m6glb2udrprs42@resize_w402_nl.webp",
-                                    text: "Mua 1 tặng 1",
-                                },
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/be40023a9d9cff397a470460bc7a924d@resize_w402_nl.webp",
-                                    text: "Deli siêu sale",
-                                },
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/vn-11134258-7ras8-m4ycyi0ypc5414@resize_w402_nl.webp",
-                                    text: "Mua 1 tặng 1",
-                                },
-                                {
-                                    img: "https://down-vn.img.susercontent.com/file/vn-50009109-08a87dd1e828b4bef31dafa67d5300ec@resize_w402_nl.webp",
-                                    text: "Quà mọi đơn",
-                                },
-                            ].map((item, index) => (
+                            {ShopeeMall.map((item, index) => (
                                 <div key={index} className="flex flex-col items-center relative">
                                     <img className="object-cover w-full h-auto" src={item.img} alt={item.text} />
                                     <div className="text-center text-sm text-[#EE4D2D] font-bold relative -mt-6 bg-white px-2">

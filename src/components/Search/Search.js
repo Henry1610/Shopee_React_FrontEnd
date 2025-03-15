@@ -2,11 +2,9 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Tippy from '@tippyjs/react/headless'; // different import path!
 import { useEffect, useState } from 'react';
-import { Link, useParams, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
-import useFetch from '../../useFetch/useFetch';
 function Search() {
-    const [searchParams,setSearchParams]=useSearchParams()
     const [resultInput, setResultInput] = useState('')
     const [products, setProductsList] = useState([])
     const [categories, setCategories] = useState([]); // ✅ State để lưu danh mục
@@ -17,7 +15,7 @@ function Search() {
     const [hide, setHide] = useState(true)
 
 
-    
+
     useEffect(() => {
 
 
@@ -61,20 +59,25 @@ function Search() {
                             </div>
                         </div>
                         <div className='flex flex-col'>
-                            {products.length === 0 ? <div className='text-center text-lg p-3 rounded-md'>Không tìm thấy sản phẩm!</div> : products.map((product) => (
-                                <Link to={`/products/${product.id}`} className="border-b" key={product.id}>
-
-                                    <div className="px-3 py-1">{product.title}</div>
-
-                                </Link>
-                            ))}
+                            {loading ? (
+                                <div className='text-center text-lg p-3 rounded-md text-white'>🔄 Đang tải sản phẩm...</div>
+                            ) : products.length === 0 ? (
+                                <div className='text-center text-lg p-3 rounded-md'>Không tìm thấy sản phẩm!</div>
+                            ) : (
+                                products.map((product) => (
+                                    <Link to={`/products/${product.id}`} className="border-b" key={product.id}>
+                                        <div className="px-3 py-1">{product.title}</div>
+                                    </Link>
+                                ))
+                            )}
                         </div>
+
                     </div>
                 </div>))}>
                 <div className="flex-1  relative ">
                     <input
                         onFocus={() => setHide(true)}
-                        onChange={(e)=>handleChange(e)}
+                        onChange={(e) => handleChange(e)}
                         type="text"
                         placeholder="Shopee bao ship 0Đ - Đăng ký ngay!"
                         className="w-full  lg:w-[800px] text-black p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500 "
@@ -88,14 +91,16 @@ function Search() {
             </Tippy>
 
 
-            <div className="w-full flex flex-wrap gap-2 text-xs text-white mt-2 ">
-                {categories.map((category, index) => (
-                    index < 11 && ( // ✅ Chỉ render nếu index < 5
-                        <Link key={index} to={`/products?category=${category}`} className="hover:underline "     >
+            <div className="w-full flex flex-wrap gap-2 text-xs text-white mt-2">
+                {loading ? (
+                    <div className="text-white">🔄 Đang tải danh mục...</div>
+                ) : (
+                    categories.slice(0, 11).map((category, index) => (
+                        <Link key={index} to={`/products?category=${category}`} className="hover:underline">
                             {category}
                         </Link>
-                    )
-                ))}
+                    ))
+                )}
             </div>
 
         </div >);

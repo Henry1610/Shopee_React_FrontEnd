@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import './Navbar.css';
 import { useContext } from "react";
 import Swal from "sweetalert2";
-
+import { memo } from "react";
 import { CartContext } from "../../context/CartContext";
 import Search from "../../components/Search/Search";
 function Navbar() {
@@ -46,17 +46,17 @@ function Navbar() {
                 <div className="flex justify-between items-center text-xs font-normal p-1">
                     <div className="flex space-x-1 link-item">
                         <Link to="/seller" className="hover:underline">Kênh người bán</Link>
-                        <a href="#" className="hover:underline">Trở thành người bán Shopee</a>
-                        <a href="#" className="hover:underline">Tải ứng dụng</a>
-                        <a href="#" className="hover:underline">Kết nối</a>
+                        <a href="#1" className="hover:underline">Trở thành người bán Shopee</a>
+                        <a href="#1" className="hover:underline">Tải ứng dụng</a>
+                        <a href="#1" className="hover:underline">Kết nối</a>
 
 
                     </div>
 
                     <div className="flex space-x-4 text-xs">
-                        <a href="#" className="hover:underline ">Thông báo</a>
-                        <a href="#" className="hover:underline">Hỗ trợ</a>
-                        <a href="#" className="hover:underline">Tiếng Việt</a>
+                        <a href="#1" className="hover:underline ">Thông báo</a>
+                        <a href="#1" className="hover:underline">Hỗ trợ</a>
+                        <a href="#1" className="hover:underline">Tiếng Việt</a>
                         <div className="flex space-x-2 pl-3">
                             {currentUser ? (
                                 <>
@@ -107,4 +107,4 @@ function Navbar() {
     );
 }
 
-export default Navbar;
+export default memo(Navbar);

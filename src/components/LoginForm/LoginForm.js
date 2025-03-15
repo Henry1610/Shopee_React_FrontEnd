@@ -1,16 +1,16 @@
 import { faFacebook, faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { useCallback, useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
+
 function LoginForm({ switchToRegister }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const { setCart } = useContext(CartContext); // 🔥 Lấy setCart từ context
 
     const navigate = useNavigate();
-    const handleLogin = (e) => {
+    const handleLogin = useCallback((e) => {
         e.preventDefault();
         
         let users = JSON.parse(localStorage.getItem(`users`)) || [];
@@ -29,8 +29,11 @@ function LoginForm({ switchToRegister }) {
         } else {
             alert("Sai email hoặc mật khẩu!");
         }
-    }
+    }, [email, password, setCart, navigate])
 
+
+    const handleEmailChange = useCallback((e) => setEmail(e.target.value), []);
+    const handlePasswordChange = useCallback((e) => setPassword(e.target.value), []);
     return (<div className="absolute top-[30%] sm:top-1/2 right-0 transform -translate-y-1/2 bg-white p-5 sm:p-10 rounded-lg shadow-lg flex flex-col w-[90%] max-w-[400px] sm:right-0 sm:w-full">
 
 
@@ -44,7 +47,7 @@ function LoginForm({ switchToRegister }) {
                 <input
                     value={email}
                     type="email"
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={handleEmailChange}
                     className="w-full py-2 px-4 mb-3 border rounded  text-start text-sm"
                     placeholder="Email/Số điện thoại/Tên đăng nhập"
                 />
@@ -52,7 +55,7 @@ function LoginForm({ switchToRegister }) {
                 <input
                     value={password}
                     type="password"
-                    onChange={(e) => setPassword(e.target.value)} required
+                    onChange={handlePasswordChange} required
                     className="w-full py-2 px-4 mb-3 border rounded text-start text-sm"
                     placeholder="Mật khẩu"
                 />

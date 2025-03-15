@@ -1,12 +1,13 @@
 import images from "../../assets/images";
 import Footer from "../../layouts/Footer/Footer";
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import LoginForm from "../../components/LoginForm";
 import RegisterForm from "../../components/RegisterForm";
 
 function Login() {
     const [isLogin,setLogin]=useState(true)
-    
+    const switchToRegister = useCallback(() => setLogin(false), []);
+    const switchToLogin = useCallback(() => setLogin(true), []);
     return (
         <div>
             <div className="items-center m-5">
@@ -25,9 +26,9 @@ function Login() {
                         className="w-full h-auto object-cover"
                         alt=""
                     />
-                    {isLogin ? (<LoginForm switchToRegister={()=>setLogin(false)}/>) :
+                    {isLogin ? (<LoginForm switchToRegister={switchToRegister}/>) :
                         // Form đăng ký
-                        (<RegisterForm switchToLogin={()=>setLogin(true)}/>)}
+                        (<RegisterForm switchToLogin={switchToLogin}/>)}
 
                 </div>
             </div>

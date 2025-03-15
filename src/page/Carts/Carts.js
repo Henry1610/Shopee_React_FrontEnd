@@ -5,17 +5,21 @@ import Commit from "../../components/Commit";
 import CartItem from "./CartItem";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
+import { useMemo } from "react";
 
 function Carts() {
-    const { removeCart, cart, increaseQuantity, decreaseQuantity } = useContext(CartContext)
-    const subtotal = cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    const { removeCart, cart=[], increaseQuantity, decreaseQuantity } = useContext(CartContext)
+    const subtotal = useMemo(() => 
+        cart.reduce((total, item) => total + item.price * item.quantity, 0), 
+    [cart]);
+    
+    const totalDiscount = useMemo(() => 
+        cart.reduce((sum, item) => (sum + (item.discountPercentage / 100) * item.price * item.quantity),0), 
+    [cart]);
+    
+    const total = useMemo(() => subtotal - totalDiscount, [subtotal, totalDiscount]);
 
-    const totalDiscount = cart.reduce((sum, item) => {
-        const discountAmount = (item.discountPercentage / 100) * item.price * item.quantity;
-        return sum + discountAmount;
-    }, 0);
 
-    const total = subtotal - totalDiscount;
 
 
     return (

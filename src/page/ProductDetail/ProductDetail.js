@@ -5,11 +5,13 @@ import { faFacebook, faFacebookMessenger, faTwitter, faPinterest } from "@fortaw
 import MostLike from "../../components/MostLike";
 import { useParams, useSearchParams } from "react-router-dom";
 import useFetch from "../../useFetch";
-import { useContext, useState } from "react";
+import { useContext, useState,useMemo } from "react";
 import { CartContext } from "../../context/CartContext";
 import Swal from "sweetalert2";
 import { faShieldHalved, faTruck, faArrowLeft, faStore } from "@fortawesome/free-solid-svg-icons";
-
+import { Link } from "react-router-dom";
+import Footer from "../../layouts/Footer/Footer";
+import Commit from "../../components/Commit";
 
 const ratings = [
     { stars: "Tất Cả" },
@@ -32,12 +34,19 @@ function ProductDetail() {
     const { addToCart } = useContext(CartContext)
     const { id } = useParams();
     const { data, loading, error } = useFetch(`https://dummyjson.com/products/${id}`)
-    const rate=parseInt(searchParams.get('rate')) 
+    const originalPrice = useMemo(() => {
+        return data ? (data.price / (1 - data.discountPercentage / 100)).toFixed(2) : 0;
+    }, [data]);
+    const rate=parseInt(searchParams.get('rate')) ||0
+    const [selectedStar,setSelectedStar]=useState()
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
     if (!data) return <p>No data available</p>; // Tránh lỗi khi data là null
-    const originalPrice = (data.price / (1 - data.discountPercentage / 100)).toFixed(2);
+    
     const increase = (stock) => {
+        console.log('re-render');
+
         if (numberProduct === stock) {
             Swal.fire({
                 title: "Cảnh báo!",
@@ -52,6 +61,8 @@ function ProductDetail() {
         }
     };
     const decrease = () => {
+        console.log('re-render');
+        
         if (numberProduct === 1) {
             Swal.fire({
                 title: "Lưu ý!",
@@ -65,11 +76,15 @@ function ProductDetail() {
         }
     };
     const handleChoose = (key, value) => {
-        
+
+        setSelectedStar(prev => {
+            return value;
+        });          
         const url = new URLSearchParams(searchParams)
         url.set(key, value === 'Tất Cả' ? 0 : value);
         setSearchParams(url)
-
+        
+        
     }
     return (<div className="max-w-[2000px]">
 
@@ -152,7 +167,7 @@ function ProductDetail() {
                                             <span className="font-semibold">SKU:</span> {data.sku}
                                         </li>
                                         <li>
-                                            <span className="font-semibold">Weight:</span> {data.weight} g
+                                            <span className="font-semibold">Weight:</span> {data.weight} 
                                         </li>
                                         <li>
                                             <span className="font-semibold">Dimensions:</span>
@@ -175,7 +190,7 @@ function ProductDetail() {
                                             <FontAwesomeIcon icon={service.icon} className="text-black text-xl" />
 
                                         </div>
-                                        <div className="ml-4">a
+                                        <div className="ml-4">
                                             <h5 className="text-md font-semibold">{service.title}</h5>
                                             <p className="text-gray-500 text-xs">{service.subtitle}</p>
                                         </div>
@@ -271,7 +286,7 @@ function ProductDetail() {
                     <div className="flex space-x-2 mt-1">
                         {data.tags.map((tag, index) => (
                             <span key={index} className="px-2 py-1 bg-blue-100 text-blue-600 rounded text-sm">
-                                {tag}
+                                <Link to={`/products?category=${tag}`}>{tag}</Link>
                             </span>
                         ))}
                     </div>
@@ -308,8 +323,9 @@ function ProductDetail() {
                                     
                                     <button
                                         key={index}
-                                        className="border px-4 py-2 text-sm rounded bg-white hover:bg-[#ee4d2d] hover:text-white"
                                         onClick={()=>handleChoose('rate',rating.stars)}
+                                        className={`border px-4 py-2 text-sm rounded  hover:bg-[#ee4d2d] hover:text-white ${selectedStar ===rating.stars  ?"bg-[#ee4d2d] text-white" :"bg-white" }`}
+
                                     >
                                         {rating.stars} Sao 
                                     </button>
@@ -321,7 +337,7 @@ function ProductDetail() {
 
 
 
-
+                                {/* {console.log(rate)} */}
 
                 <div className="mt-6 border-t pt-4">
                     {data.reviews.filter(review => rate === 0||rate===review.rating).map((review, index) => (
@@ -344,6 +360,8 @@ function ProductDetail() {
                 </div>
 
             </div>
+            <Commit/>
+            <Footer/>
         </Wrapper >
     </div >);
 }

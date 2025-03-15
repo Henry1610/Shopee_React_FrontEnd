@@ -5,6 +5,7 @@ import Navbar from "../../layouts/Navbar";
 import useFetch from "../../useFetch";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import Commit from "../../components/Commit";
 
 const discounts = ["5", "10", "15", "20"];
 const ratings = [2, 3, 4, 5];
@@ -203,6 +204,7 @@ function Category() {
                         <ProductList />
                     </div>
                 </div>
+                <Commit/>
                 <Footer />
             </Wrapper>
 

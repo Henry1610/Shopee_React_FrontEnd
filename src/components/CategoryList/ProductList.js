@@ -1,5 +1,5 @@
 import { Star, ShoppingCart } from "lucide-react";
-import { data, Link, useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 

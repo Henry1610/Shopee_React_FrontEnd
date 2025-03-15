@@ -1,3 +1,4 @@
+import { memo } from "react";
 function Commit() {
     return (
     <div className="py-4 border-b-2 border-[#ee4d2d] text-[10px] border-t-2 px-10">
@@ -45,4 +46,4 @@ function Commit() {
     </div>);
 }
 
-export default Commit;
+export default memo(Commit);
