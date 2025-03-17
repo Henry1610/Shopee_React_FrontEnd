@@ -1,13 +1,8 @@
 import { Navigation, Pagination, Autoplay } from "swiper/modules"; // Import module Swiper
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { memo, useMemo } from "react";
+import { memo } from "react";
 import './Swiper.css'
-// Import Swiper styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import { Ban } from "lucide-react";
+
 
 
  function Banner({ images }) {

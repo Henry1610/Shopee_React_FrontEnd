@@ -1,0 +1,28 @@
+.custom-swiper-nav .swiper-button-next,
+.custom-swiper-nav .swiper-button-prev {
+  background-color: rgba(0, 0, 0, 0.7); 
+  color: white;
+  border-radius: 30%; 
+  width: 40px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.custom-swiper-nav .swiper-button-next:hover,
+.custom-swiper-nav .swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+
+
+.custom-swiper .swiper-slide {
+  transition: transform 0.3s ease-in-out;
+}
+
+.custom-swiper .swiper-slide:hover {
+  transform: scale(1.05); 
+}
+
