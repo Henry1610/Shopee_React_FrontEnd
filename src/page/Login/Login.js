@@ -1,6 +1,6 @@
 import images from "../../assets/images";
 import Footer from "../../layouts/Footer/Footer";
-import { useState, useCallback, useMemo } from "react";
+import { useState, useCallback } from "react";
 import LoginForm from "../../components/LoginForm";
 import RegisterForm from "../../components/RegisterForm";
 
