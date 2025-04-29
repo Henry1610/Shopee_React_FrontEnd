@@ -1,89 +1,112 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 
+import { cartReducer, initialCartState } from "./cartReducer";
+
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const showToast = (message) => {
-        toast.success(message, { position: "top-right", autoClose: 1000 });
-    };
+  const showToast = (message) => {
+    toast.success(message, { position: "top-right", autoClose: 1000 });
+  };
 
-    const currentUser = localStorage.getItem('currentUser')
-    const cartKey = currentUser ? `cart_${currentUser}` : "cart_guest";
+  const currentUser = localStorage.getItem("currentUser");
+  const cartKey = currentUser ? `cart_${currentUser}` : "cart_guest";
 
-    const [cart, setCart] = useState(() => {
-        return JSON.parse(localStorage.getItem(cartKey)) || [];
-    });
-    useEffect(() => {
-        if (currentUser) {
-            localStorage.setItem(cartKey, JSON.stringify(cart));
-        }
-    }, [cart]);
+  const storedCart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
+  const [cart, dispatch] = useReducer(cartReducer, storedCart);
 
-    const addToCart = (product, number = 1) => {
-        showToast("Đã thêm sản phẩm vào giỏ hàng!");
-
-        setCart((prevCart) => {
-            const newCart = [...prevCart]; // Tạo bản sao để tránh thay đổi trực tiếp state cũ
-            const exist = newCart.find((item) => item.id === product.id);
-
-            if (exist) {
-                exist.quantity += number; // Cộng trực tiếp vào quantity của sản phẩm có sẵn
-            } else {
-                newCart.push({ ...product, quantity: number }); // Thêm sản phẩm mới
-            }
-
-            return newCart;
-        });
-    };
-
-
-
-
-    const removeCart = (id) => {
-        Swal.fire({
-            title: "Bạn có chắc muốn xóa?",
-            text: "Sản phẩm này sẽ bị xóa khỏi giỏ hàng!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#d33",
-            cancelButtonColor: "#3085d6",
-            confirmButtonText: "Xóa ngay!",
-            cancelButtonText: "Hủy",
-        }).then((result) => {
-            if (result.isConfirmed) {
-                setCart((prevCart) => prevCart.filter((item) => item.id !== id));
-                toast.error("Đã xóa sản phẩm khỏi giỏ hàng!", {
-                    position: "top-right",
-                    autoClose: 2000,
-                });
-            }
-        });
-    };
-
-
-    const increaseQuantity = (id) => {
-        setCart(prevCart => prevCart.map((item) =>
-            item.id === id ? { ...item, quantity: item.quantity + 1 } : item
-
-        ))
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem(cartKey, JSON.stringify(cart));
     }
+  }, [cart]);
 
-    const decreaseQuantity = (id) => {
-        setCart((prevCart) =>
-            prevCart
-                .map((item) =>
-                    item.id === id ? { ...item, quantity: item.quantity - 1 } : item
-                )
-                .filter((item) => item.quantity > 0) // Xóa sản phẩm nếu quantity = 0
-        );
+  // Action functions
+  const addToCart = (product, number = 1) => {
+    showToast("Đã thêm sản phẩm vào giỏ hàng!");
+    dispatch({
+      type: "ADD_TO_CART",
+      payload: { ...product, quantity: number },
+    });
+  };
+
+  const removeCart = (id) => {
+    Swal.fire({
+      title: "Bạn có chắc muốn xóa?",
+      text: "Sản phẩm này sẽ bị xóa khỏi giỏ hàng!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Xóa ngay!",
+      cancelButtonText: "Hủy",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        dispatch({ type: "REMOVE_FROM_CART", payload: id });
+        toast.error("Đã xóa sản phẩm khỏi giỏ hàng!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+      }
+    });
+  };
+  const placeOrder = () => {
+    if (cart.length === 0) {
+      toast.error("Giỏ hàng của bạn trống.");
+      return;
+    }
+  
+    const orderId = `order_${Date.now()}`;
+    const orderData = {
+      orderId,
+      items: cart,
+      status: "paid",
+      totalAmount: cart.reduce((total, item) => total + item.price * item.quantity, 0),
+      date: new Date().toISOString()
     };
-    return (
-        <CartContext.Provider value={{ cart, addToCart, removeCart, increaseQuantity, decreaseQuantity ,setCart}}>
-            {children}
-        </CartContext.Provider>
-    );
+  
+    const ordersKey = currentUser ? `orders_${currentUser}` : "orders_guest";
+  
+    const existingOrders = JSON.parse(localStorage.getItem(ordersKey)) || [];
+    const updatedOrders = [...existingOrders, orderData];
+    localStorage.setItem(ordersKey, JSON.stringify(updatedOrders));
+  
+    // Clear cart
+    localStorage.removeItem(cartKey);
+    dispatch({ type: "CLEAR_CART" });
+  
+    toast.success("Đã thanh toán, đơn hàng đã được tạo!");
+  };
+  
+  const increaseQuantity = (id) => {
+    dispatch({ type: "INCREASE_QUANTITY", payload: id });
+  };
+
+  const decreaseQuantity = (id) => {
+    dispatch({ type: "DECREASE_QUANTITY", payload: id });
+  };
+
+  const setCart = (newCart) => {
+    dispatch({ type: "SET_CART", payload: newCart });
+  };
+
+  return (
+    <CartContext.Provider
+      value={{
+        cart,
+        addToCart,
+        removeCart,
+        increaseQuantity,
+        decreaseQuantity,
+        setCart,
+        placeOrder, 
+      }}
+    >
+      {children}
+    </CartContext.Provider>
+  );
 };
