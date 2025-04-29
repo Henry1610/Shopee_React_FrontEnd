@@ -84,7 +84,15 @@ function Navbar() {
                     {/* Search Bar */}
 
                     <Search />
+                    {/* History order */}
 
+                    <div className="relative">
+
+                        <Link to={localStorage.getItem('currentUser') ? "/order" : "/login"} className="relative text-white hover:text-gray-200">
+                            <i class="fas fa-history me-1"></i>
+
+                        </Link>
+                    </div>
                     {/* Cart */}
                     <div className="relative">
 
@@ -94,13 +102,15 @@ function Navbar() {
                                 <span className="absolute -top-5 -right-4 bg-white text-[#ee4d2d] text-sm font-bold px-2 py-[1x] rounded-md">
                                     {cart.length}
                                 </span>
+
                             )}
                         </Link>
                     </div>
 
+
                 </div>
 
-                
+
 
             </div>
         </div>

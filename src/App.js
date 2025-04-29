@@ -4,6 +4,8 @@ import routes from './routes';
 import { CartProvider } from './context/CartContext';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
 function App() {
   return (
     <CartProvider>

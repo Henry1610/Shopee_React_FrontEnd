@@ -7,7 +7,7 @@ import { CartContext } from "../../context/CartContext";
 function LoginForm({ switchToRegister }) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const { setCart } = useContext(CartContext); // 🔥 Lấy setCart từ context
+    const { setCart } = useContext(CartContext);
 
     const navigate = useNavigate();
     const handleLogin = useCallback((e) => {
