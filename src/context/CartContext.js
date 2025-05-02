@@ -1,9 +1,11 @@
 import { createContext, useEffect, useReducer } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
 import "react-toastify/dist/ReactToastify.css";
 import Swal from "sweetalert2";
 
-import { cartReducer, initialCartState } from "./cartReducer";
+import { cartReducer } from "./cartReducer";
 
 export const CartContext = createContext();
 
@@ -11,6 +13,7 @@ export const CartProvider = ({ children }) => {
   const showToast = (message) => {
     toast.success(message, { position: "top-right", autoClose: 1000 });
   };
+  const navigate = useNavigate();
 
   const currentUser = localStorage.getItem("currentUser");
   const cartKey = currentUser ? `cart_${currentUser}` : "cart_guest";
@@ -23,7 +26,8 @@ export const CartProvider = ({ children }) => {
     if (currentUser) {
       localStorage.setItem(cartKey, JSON.stringify(cart));
     }
-  }, [cart]);
+  }, [cart, cartKey, currentUser]); // Add cartKey and currentUser as dependencies
+  
 
   // Action functions
   const addToCart = (product, number = 1) => {
@@ -64,7 +68,7 @@ export const CartProvider = ({ children }) => {
     const orderData = {
       orderId,
       items: cart,
-      status: "paid",
+      status: "pending",
       totalAmount: cart.reduce((total, item) => total + item.price * item.quantity, 0),
       date: new Date().toISOString()
     };
@@ -78,7 +82,8 @@ export const CartProvider = ({ children }) => {
     // Clear cart
     localStorage.removeItem(cartKey);
     dispatch({ type: "CLEAR_CART" });
-  
+    navigate(`/checkout/success/${orderId}`);
+
     toast.success("Đã thanh toán, đơn hàng đã được tạo!");
   };
   

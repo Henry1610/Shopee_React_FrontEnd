@@ -8,7 +8,6 @@ import {
   CLEAR_CART,
 } from "./cartActionTypes"; // 🔧 Import chuẩn từ file action types
 
-export const initialCartState = [];
 
 export const cartReducer = (state, action) => {
   switch (action.type) {

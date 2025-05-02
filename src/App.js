@@ -9,14 +9,12 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 function App() {
   return (
     <CartProvider>
-      <Router>
         <Routes>
           {routes.map((route, index) => (
 
             <Route key={index} path={route.path} element={<route.component />} />
           ))}
         </Routes>
-      </Router>
       <ToastContainer />
     </CartProvider>
 
