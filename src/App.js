@@ -1,5 +1,5 @@
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import routes from './routes';
 import { CartProvider } from './context/CartContext';
 import { ToastContainer } from "react-toastify";

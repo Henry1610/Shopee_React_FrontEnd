@@ -6,7 +6,7 @@ import {
   DECREASE_QUANTITY,
   SET_CART,
   CLEAR_CART,
-} from "./cartActionTypes"; // 🔧 Import chuẩn từ file action types
+} from "./cartActionTypes"; 
 
 
 export const cartReducer = (state, action) => {

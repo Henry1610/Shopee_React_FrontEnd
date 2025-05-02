@@ -14,7 +14,7 @@ const sortOptions = ["Giá tăng dần", "Giá giảm dần", "Đánh giá cao n
 const price = [[0, 10000], [5, 10], [11, 50], [51, 100]]
 
 function Category() {
-    const { data, loading, err } = useFetch('https://dummyjson.com/products/category-list')
+    const { data, loading } = useFetch('https://dummyjson.com/products/category-list')
 
     const [visibleCount, setVisibleCount] = useState(4);
     const [searchParams, setSearchParams] = useSearchParams();

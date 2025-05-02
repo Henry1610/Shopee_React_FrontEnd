@@ -37,7 +37,6 @@ function Navbar() {
             }
         })
 
-        //window.location.reload(); // Reload trang để cập nhật giao diện
     };
     return (
         <div className="fixed top-0 left-0 w-full bg-gradient-to-t from-[#ee4d2d] to-[#d0011b] text-white z-50">

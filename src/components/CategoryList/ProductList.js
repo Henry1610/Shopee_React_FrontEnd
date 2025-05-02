@@ -4,13 +4,16 @@ import { useContext, useEffect, useState } from "react";
 import { CartContext } from "../../context/CartContext";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 
 function ProductList() {
     const { addToCart } = useContext(CartContext);
     const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
-    const selectedCategories = searchParams.get("category")?.split(",") || [];
+    const selectedCategories = useMemo(() => {
+        return searchParams.get("category")?.split(",") || [];
+    }, [searchParams]);
     const selectedRate = searchParams.get("rate") || 1;
     const selectedCondition = searchParams.get("condition");
     const selectedDiscount = searchParams.get("discount");
@@ -23,9 +26,9 @@ function ProductList() {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    
+
     const [currentPage, setCurrentPage] = useState(1);
-    const productsPerPage = 10; 
+    const productsPerPage = 10;
 
     const getAvailability = (stock) => {
         switch (true) {
@@ -35,7 +38,7 @@ function ProductList() {
         }
     };
 
-    
+
     useEffect(() => {
         setLoading(true);
         setError(null);
@@ -68,14 +71,14 @@ function ProductList() {
         };
 
         fetchProducts();
-    }, [searchParams]);
+    }, [selectedCategories]);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error}</p>;
 
     // Lọc & sắp xếp sản phẩm
     const filteredProducts = products
-        .filter(product => 
+        .filter(product =>
             (!selectedCondition || getAvailability(product.stock) === selectedCondition) &&
             product.rating >= selectedRate &&
             product.discountPercentage > (selectedDiscount || 0) &&
@@ -157,7 +160,7 @@ function ProductList() {
 
             {totalPages > 1 && (
                 <div className="flex gap-2 mt-5">
-                    <button 
+                    <button
                         onClick={() => goToPage(currentPage - 1)}
                         disabled={currentPage === 1}
                         className={`px-3 py-1 border rounded ${currentPage === 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`}
@@ -165,15 +168,15 @@ function ProductList() {
                         Prev
                     </button>
                     {[...Array(totalPages)].map((_, i) => (
-                        <button 
-                            key={i} 
+                        <button
+                            key={i}
                             onClick={() => goToPage(i + 1)}
                             className={`px-3 py-1 border rounded ${currentPage === i + 1 ? "bg-gray-300" : "hover:bg-gray-200"}`}
                         >
                             {i + 1}
                         </button>
                     ))}
-                    <button 
+                    <button
                         onClick={() => goToPage(currentPage + 1)}
                         disabled={currentPage === totalPages}
                         className={`px-3 py-1 border rounded ${currentPage === totalPages ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-200"}`}

@@ -82,19 +82,19 @@ function Footer(){
                 <div className="font-bold mt-[2.5rem] mb-[1.25rem]">THEO DÕI SHOPEE</div>
                 <ul>
                     <li className="mb-3">
-                        <a className="flex ">
+                        <a href="/" className="flex ">
                             <img src="https://down-vn.img.susercontent.com/file/2277b37437aa470fd1c71127c6ff8eb5" className="pr-2" alt="" />
                             <span>Facebook</span>
                         </a>
                     </li>
                     <li className="mb-3">
-                        <a className="flex ">
+                        <a href="/" className="flex ">
                             <img src="  https://down-vn.img.susercontent.com/file/5973ebbc642ceee80a504a81203bfb91" className="pr-2"  alt=""/>
                             <span>Instagram</span>
                         </a>
                     </li>
                     <li className="mb-3">
-                        <a className="flex ">
+                        <a href="/" className="flex ">
                             <img src="https://down-vn.img.susercontent.com/file/f4f86f1119712b553992a75493065d9a " className="pr-2" alt="" />
                             <span>LinkeIn</span>
                         </a>
@@ -104,14 +104,14 @@ function Footer(){
             <div className="col-span-1 flex flex-col text-start">
                 <div className="font-bold mt-[2.5rem] mb-[1.25rem]">TẢI ỨNG DỤNG SHOPEE</div>
                 <div className="grid grid-cols-2">
-                    <a>
+                    <a href="/">
 
                         <im src="https://down-vn.img.susercontent.com/file/a5e589e8e118e937dc660f224b9a1472" />
                     </a>
                     <div className="">
-                        <a ><img className="p-2 m-2 bg-white" src="https://down-vn.img.susercontent.com/file/ad01628e90ddf248076685f73497c163"  alt=""/></a>
-                        <a><img className="p-2 m-2 bg-white" src="https://down-vn.img.susercontent.com/file/ae7dced05f7243d0f3171f786e123def"  alt=""/></a>
-                        <a><img className="p-2 m-2 bg-white" src="https://down-vn.img.susercontent.com/file/35352374f39bdd03b25e7b83542b2cb0"  alt=""/></a>
+                        <a href="/" ><img className="p-2 m-2 bg-white" src="https://down-vn.img.susercontent.com/file/ad01628e90ddf248076685f73497c163"  alt=""/></a>
+                        <a href="/"><img className="p-2 m-2 bg-white" src="https://down-vn.img.susercontent.com/file/ae7dced05f7243d0f3171f786e123def"  alt=""/></a>
+                        <a href="/"> <img className="p-2 m-2 bg-white" src="https://down-vn.img.susercontent.com/file/35352374f39bdd03b25e7b83542b2cb0"  alt=""/></a>
                     </div>
                 </div>
             </div>
